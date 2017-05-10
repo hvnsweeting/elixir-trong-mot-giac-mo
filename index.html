@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Học lập trình Elixir trong một giấc mơ">
+        
+        
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        <title>Lá ngón</title>
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href=".">Lá ngón</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#hoc-elixir-trong-mot-giac-mo">Học Elixir trong một giấc mơ</a></li>
+            <li><a href="#cac-kieu-du-lieu-co-ban">Các kiểu dữ liệu cơ bản</a></li>
+            <li><a href="#cac-thao-tac-co-ban-voi-cac-kieu-du-lieu">Các thao tác cơ bản với các kiểu dữ liệu</a></li>
+            <li><a href="#pattern-matching">Pattern matching</a></li>
+            <li><a href="#control-flow-case-cond-if-unless-doend">Control flow: case, cond, if, unless, do/end</a></li>
+            <li><a href="#function">Function</a></li>
+            <li><a href="#module">Module</a></li>
+            <li><a href="#loop-bang-recursion-reduce-va-map">Loop bằng recursion, reduce và map</a></li>
+            <li><a href="#io-xu-ly-du-lieu-vao-ra">IO - xử lý dữ liệu vào ra.</a></li>
+            <li><a href="#xu-ly-loi">Xử lý lỗi</a></li>
+            <li><a href="#bat-au-code-mot-project">Bắt đầu code một project</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="hoc-elixir-trong-mot-giac-mo">Học Elixir trong một giấc mơ</h1>
+<p>[BETA]</p>
+<p>Lý do bạn thích học Haskell, LISP, Erlang, Elixir, Ocaml, Scala... những ngôn ngữ lập trình hàm (functional programming language) có vẻ hay ho, mà không bao giờ thành công là gì?</p>
+<p>Sau đây là vài lý do mình gặp phải:</p>
+<ul>
+<li>Quá nhiều khái niệm mới</li>
+<li>Nhồi nhét hết các khái niệm xong không có gì để làm</li>
+<li>Chọn ngôn ngữ "xịn" nhất: trong mảnh đất functional programming, rất nhiều cái tên hấp dẫn khác như Haskell, Ocaml, Racket, Scheme, CLisp, Scala,...</li>
+</ul>
+<p>Để khắc phục điều này, ta sẽ:</p>
+<ul>
+<li>Chỉ tập trung vào những khái niệm đã quen thuộc, học thật nhanh, tra cứu khi cần</li>
+<li>Có một ý tưởng để thực hiện</li>
+<li>Tập trung vào Elixir vì mỗi ngôn ngữ đều có điểm mạnh/ yếu riêng, nhưng khi nắm được một ngôn ngữ, học các ngôn ngữ khác sẽ trở nên dễ dàng hơn nhiều do đã quen thuộc các khái  niệm và lối tư duy của functional programming.</li>
+</ul>
+<p>Nếu không có gì để làm, nuốt xong các khái niệm, 1 tuần sau bạn sẽ lại quên.</p>
+<p>Elixir/Erlang hoàn toàn đủ khả năng để cho bạn lập trình loanh quanh mấy thuật toán, giải các bài toán / vấn đề trên HackerRank. Nhưng điểm sáng của ngôn ngữ này, thực ra chỉ toả sáng khi ta dùng nó để phát triển các hệ thống lớn, cần chạy phân tán, hay chạy song song... Ít khi một người sẽ làm hẳn một project lớn như vậy. Vì vậy, ta thường không có đất dùng cho Elixir hay Erlang.</p>
+<p>Một cách ứng dụng để chơi với ngôn ngữ mới nữa "nhỏ hơn", là viết các câu lệnh thực hiện một việc gì đó (CLI). Vậy nhưng Elixir/Erlang không toả sáng/ đơn giản trong công việc này, nó CÓ THỂ làm được, nhưng trên thực tế không mấy ai làm.</p>
+<p>Ví dụ standard khi học Erlang là làm một hệ thống chat. Trên thực tế, hệ thống chat của "Whatsapp" được viết bằng Erlang <a href="http://highscalability.com/blog/2014/2/26/the-whatsapp-architecture-facebook-bought-for-19-billion.html">hệ thống này đã được bán lại cho FaceBook với giá 19 TỶ đô la Mỹ</a> (PS: FaceBook trước đó cũng đã mua lại Instagram - một hệ thống viết bằng Django/Python với giá 1 TỶ đô la Mỹ)</p>
+<p>Ta có thể làm 1 website sau khi học Elixir, đây là lĩnh vực hiện tại mà Elixir mạnh nhất.</p>
+<p>Đã xong phần ý tưởng, bây giờ hãy học Elixir.</p>
+<p>Thực hiện trên:</p>
+<pre><code>$ elixir --version
+Erlang/OTP 19 [erts-8.0.2] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Elixir 1.3.2
+</code></pre>
+
+<h2 id="cac-kieu-du-lieu-co-ban">Các kiểu dữ liệu cơ bản</h2>
+<h3 id="integer">Integer</h3>
+<pre><code>iex(33)&gt; 42
+42
+iex(34)&gt; i 42
+Term
+  42
+Data type
+  Integer
+Reference modules
+  Integer
+
+Dùng ``i OBJECT`` để hiển thị thông tin về giá trị/ kiểu của object. Như &quot;type(object)&quot; trong Python hay &quot;typeof object&quot; trong JavaScript.
+</code></pre>
+
+<h3 id="float">Float</h3>
+<pre><code>iex(35)&gt; i 3.14
+Term
+  3.14
+Data type
+  Float
+Reference modules
+  Float
+
+iex(36)&gt; 0.1 + 0.1 + 0.1
+0.30000000000000004
+</code></pre>
+
+<h3 id="atom">Atom</h3>
+<pre><code>iex(39)&gt; i true
+Term
+  true
+Data type
+  Atom
+Reference modules
+  Atom
+iex(40)&gt; i false
+Term
+  false
+Data type
+  Atom
+Reference modules
+  Atom
+</code></pre>
+
+<h3 id="string">String</h3>
+<pre><code>iex(42)&gt; i &quot;Elixir&quot;
+Term
+  &quot;Elixir&quot;
+Data type
+  BitString
+Byte size
+  6
+Description
+  This is a string: a UTF-8 encoded binary. It's printed surrounded by
+  &quot;double quotes&quot; because all UTF-8 encoded codepoints in it are printable.
+Raw representation
+  &lt;&lt;69, 108, 105, 120, 105, 114&gt;&gt;
+Reference modules
+  String, :binary
+</code></pre>
+
+<p>Các kiểu dữ liệu chứa được kiểu khác: list, tuple, dict</p>
+<h3 id="list">List</h3>
+<pre><code>iex(44)&gt; i 'abc'
+Term
+  'abc'
+Data type
+  List
+Description
+  This is a list of integers that is printed as a sequence of characters
+  delimited by single quotes because all the integers in it represent valid
+  ASCII characters. Conventionally, such lists of integers are referred to as
+  &quot;charlists&quot; (more precisely, a charlist is a list of Unicode codepoints,
+  and ASCII is a subset of Unicode).
+Raw representation
+  [97, 98, 99]
+Reference modules
+  List
+
+
+iex(45)&gt; i [1,2,3,3.14]
+Term
+  [1, 2, 3, 3.14]
+Data type
+  List
+Reference modules
+  List
+
+iex(46)&gt; i []
+Term
+  []
+Data type
+  List
+Reference modules
+  List
+</code></pre>
+
+<p>Một list có thể chứa bất kỳ kiểu dữ liệu nào:</p>
+<pre><code>iex(6)&gt; i [&quot;abc&quot;, 1]
+Term
+  [&quot;abc&quot;, 1]
+Data type
+  List
+Reference modules
+  List
+</code></pre>
+
+<p>Với list chứa các phần tử tuple-2 {atom: value}, Elixir hỗ trợ thêm cú pháp ngắn gọn để tạo ra list này và gọi là "keyword list" (bản chất vẫn là 1 list bình thường):</p>
+<pre><code>iex(38)&gt; [{:name, &quot;PyMi&quot;}, {:est, 2015}]
+[name: &quot;PyMi&quot;, est: 2015]
+iex(39)&gt; [name: &quot;PyMi&quot;, est: 2015]
+[name: &quot;PyMi&quot;, est: 2015]
+
+iex(38)&gt; [{:name, &quot;PyMi&quot;}, {:est, 2015}]
+[name: &quot;PyMi&quot;, est: 2015]
+iex(39)&gt; [name: &quot;PyMi&quot;, est: 2015]
+[name: &quot;PyMi&quot;, est: 2015]
+</code></pre>
+
+<h3 id="tuple">Tuple</h3>
+<pre><code>iex(48)&gt; i {100, 'abc'}
+Term
+  {100, 'abc'}
+Data type
+  Tuple
+Reference modules
+  Tuple
+iex(49)&gt; i {}
+Term
+  {}
+Data type
+  Tuple
+Reference modules
+  Tuple
+
+</code></pre>
+
+<p>Không giống Python, trong Elixir, TẤT CẢ các kiểu dữ liệu đều là immutable, tức một khi đã tạo ra, không thể thay đổi. Muốn "thay đổi", ta phải tạo mới.</p>
+<p>Trên Python, những điều sau đều có thể làm trên list hay tuple:
+- duyệt qua từng phần tử (loop)
+- truy cập index
+- slice để thu được một tập con</p>
+<p>Sự giống nhau về tính năng khiến người dùng thường hỏi khi nào dùng list, khi nào dùng tuple.
+Với Python, ta có thể thay đổi 1 list, nhưng không thể thay đổi một tuple sau khi đã tạo ra nó.
+Với Elixir, cả list và tuple đều không thể thay đổi được (immutable).
+Đặc điểm này sẽ giúp thấy rõ hơn khi nào dùng tuple và khi nào nên dùng list:
+- list THƯỜNG dùng để chứa các dữ liệu tương tự nhau (heterogenious)
+- tuple thường để chứa các thông tin liên quan đến nhau, như các cột trong 1 dòng của database, các toạ độ của một điểm, các đặc tính của một con mèo...</p>
+<p>Khi đó, ta sẽ thường loop qua 1 list, và thường truy cập đến các phần tử của tuple thông qua indexing/unpacking.</p>
+<pre><code>iex(52)&gt; person = {&quot;HVN&quot;, 27, &quot;Python&quot;}
+{&quot;HVN&quot;, 27, &quot;Python&quot;}
+iex(53)&gt; {name, age, language} = person
+{&quot;HVN&quot;, 27, &quot;Python&quot;}
+iex(54)&gt; name
+&quot;HVN&quot;
+</code></pre>
+
+<p>http://elixir-lang.org/getting-started/basic-types.html#lists-or-tuples
+http://stackoverflow.com/questions/31192923/lists-vs-tuples-what-to-use-and-when</p>
+<h3 id="map-dictionary">Map (dictionary)</h3>
+<pre><code>iex(51)&gt; i %{&quot;name&quot;: &quot;FAMILUG&quot;}
+Term
+  %{name: &quot;FAMILUG&quot;}
+Data type
+  Map
+Reference modules
+  Map
+</code></pre>
+
+<h2 id="cac-thao-tac-co-ban-voi-cac-kieu-du-lieu">Các thao tác cơ bản với các kiểu dữ liệu</h2>
+<h3 id="thao-tac-voi-string">Thao tác với String</h3>
+<ul>
+<li>Kiểm tra string con:</li>
+</ul>
+<pre><code>iex(9)&gt; String.contains?(&quot;Python&quot;, &quot;on&quot;)
+true
+iex(10)&gt; String.contains?(&quot;Python&quot;, &quot;ON&quot;)
+false
+</code></pre>
+
+<p>Chú ý tên function có dấu ?</p>
+<ul>
+<li>Kiểm tra bắt đầu và kết thúc:</li>
+</ul>
+<pre><code>iex(11)&gt; String.starts_with?(&quot;Python&quot;, &quot;Py&quot;)
+true
+iex(12)&gt; String
+String      StringIO
+iex(12)&gt; String.ends_with?(&quot;Python.mp3&quot;, &quot;.mp3&quot;)
+true
+</code></pre>
+
+<p>Dễ thấy, những function trả về true/false đều được đặt tên kết thúc bằng dấu ?</p>
+<ul>
+<li>
+<p>Lấy index #TODO</p>
+</li>
+<li>
+<p>Nối các phần tử của list (KHÔNG THỂ NỐI TUPLE):</p>
+</li>
+</ul>
+<pre><code>iex(55)&gt; Enum.join([&quot;Python&quot;, &quot;PyMi.vn&quot;], &quot; &quot;)
+&quot;Python PyMi.vn&quot;
+iex(57)&gt; [&quot;Elixir&quot;, &quot;PyMi.vn&quot;] |&gt; Enum.join(&quot;+&quot;)
+&quot;Elixir+PyMi.vn&quot;
+iex(61)&gt; &quot;Học Python&quot; &lt;&gt; &quot; &quot; &lt;&gt; &quot;tại PyMi.vn&quot;
+&quot;Học Python tại PyMi.vn&quot;
+
+iex(7)&gt; Enum.join {1, 2}
+** (Protocol.UndefinedError) protocol Enumerable not implemented for {1, 2}
+    (elixir) lib/enum.ex:1: Enumerable.impl_for!/1
+    (elixir) lib/enum.ex:116: Enumerable.reduce/3
+    (elixir) lib/enum.ex:1636: Enum.reduce/3
+    (elixir) lib/enum.ex:1154: Enum.join/2
+iex(7)&gt; Enum.join [1, 2]
+&quot;12&quot;
+</code></pre>
+
+<ul>
+<li>Cắt string, biến thành list:</li>
+</ul>
+<pre><code>iex(63)&gt; String.split(&quot;Mình thích thì mình học \tthôi&quot;, &quot; &quot;)
+[&quot;Mình&quot;, &quot;thích&quot;, &quot;thì&quot;, &quot;mình&quot;, &quot;học&quot;, &quot;\tthôi&quot;]
+iex(64)&gt; String.split(&quot;Mình thích thì mình     học \tthôi&quot;)
+[&quot;Mình&quot;, &quot;thích&quot;, &quot;thì&quot;, &quot;mình&quot;, &quot;học&quot;, &quot;thôi&quot;]
+</code></pre>
+
+<p>Giống như Python.</p>
+<p>Nhưng Elixir còn có thể Split tại nhiều "separator":</p>
+<pre><code>iex(7)&gt; String.split(&quot;a-b+c&quot;, [&quot;-&quot;, &quot;+&quot;])
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+</code></pre>
+
+<ul>
+<li>trim/trim_leading/trim_trailing</li>
+</ul>
+<pre><code>iex(14)&gt; String.trim(&quot;   a\t abc\n&quot;)
+&quot;a\t abc&quot;
+iex(15)&gt; String.trim_leading(&quot;   a\t abc\n&quot;)
+&quot;a\t abc\n&quot;
+iex(16)&gt; String.trim_trailing(&quot;   a\t abc\n&quot;)
+&quot;   a\t abc&quot;
+</code></pre>
+
+<ul>
+<li>replace</li>
+</ul>
+<pre><code>iex(17)&gt; String.replace(&quot;Python&quot;, &quot;Py&quot;, &quot;Jy&quot;)
+&quot;Jython&quot;
+</code></pre>
+
+<ul>
+<li>Chữ hoa, chữ thường:</li>
+</ul>
+<pre><code>iex(18)&gt; String.upcase(&quot;Python&quot;)
+&quot;PYTHON&quot;
+iex(19)&gt; String.downcase(&quot;PYThon&quot;)
+&quot;python&quot;
+iex(20)&gt; String.capitalize(&quot;python is an animal&quot;)
+&quot;Python is an animal&quot;
+</code></pre>
+
+<ul>
+<li>Biến thành kiểu integer</li>
+</ul>
+<pre><code>iex(22)&gt; String.to_integer(&quot;   42  &quot;)
+** (ArgumentError) argument error
+    :erlang.binary_to_integer(&quot;   42  &quot;)
+iex(22)&gt; String.to_integer(&quot;42&quot;)
+42
+
+</code></pre>
+
+<p>Function này trong Elixir không có khả năng bỏ đi whitespace như Python:</p>
+<pre><code>In [1]: int(&quot;   42 \n\t   &quot;)
+Out[1]: 42
+</code></pre>
+
+<ul>
+<li>Lấy độ dài</li>
+</ul>
+<pre><code>iex(59)&gt;  String.length(&quot;Lạc trôi&quot;)
+8
+iex(60)&gt;  String.length(&quot;Lạc trôi😝&quot;)
+9
+</code></pre>
+
+<ul>
+<li>Slice: slice(string, start, len)</li>
+</ul>
+<pre><code>iex(1)&gt; String.slice(&quot;Python&quot;, 0, 2)
+&quot;Py&quot;
+iex(2)&gt; String.slice(&quot;Python&quot;, 2, 10)
+&quot;thon&quot;
+</code></pre>
+
+<ul>
+<li>Đảo ngược:</li>
+</ul>
+<pre><code>iex(4)&gt; String.reverse(&quot;DOICAN&quot;)
+&quot;NACIOD&quot;
+</code></pre>
+
+<p>https://hexdocs.pm/elixir/1.4.2/String.html#content</p>
+<h3 id="list_1">List</h3>
+<p>Sử dụng module <code>List</code>. Các function có sẵn của module List không giống như trong Python, bởi List trong Python có thể thay đổi được (thêm bớt, sửa phần tử) còn List trong Elixir thì không.</p>
+<ul>
+<li>Tạo list</li>
+</ul>
+<pre><code>iex(8)&gt; li = [1, &quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;]
+[1, &quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;]
+iex(10)&gt; i li
+Term
+  [1, &quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;]
+Data type
+  List
+Reference modules
+  List
+</code></pre>
+
+<ul>
+<li>Lấy đầu (head)</li>
+</ul>
+<pre><code>iex(11)&gt; hd li
+1
+</code></pre>
+
+<ul>
+<li>Lấy đuôi (tail)</li>
+</ul>
+<pre><code>iex(12)&gt; tl li
+[&quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;]
+</code></pre>
+
+<ul>
+<li>Lấy đầu và đuôi:</li>
+</ul>
+<pre><code>iex(24)&gt; [head | tail] = [&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;]
+[&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;]
+iex(25)&gt; head
+&quot;Python&quot;
+iex(26)&gt; tail
+[&quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;]
+</code></pre>
+
+<ul>
+<li>Kiểm tra số phần tử</li>
+</ul>
+<pre><code>iex(14)&gt; length li
+4
+</code></pre>
+
+<ul>
+<li>Kiểm tra một phần tử có trong list không</li>
+</ul>
+<pre><code>iex(5)&gt; Enum.member?([1,2,4], 3)
+false
+</code></pre>
+
+<p>Hay dùng cú pháp <code>left in right</code>:</p>
+<pre><code>iex(21)&gt; 1 in [1, 2, 3]
+true
+</code></pre>
+
+<p>Chú ý cú pháp <code>in</code> này không hoạt động với tuple, map (như trong Python).</p>
+<pre><code>iex(21)&gt; 1 in {1, 2, 3}
+** (Protocol.UndefinedError) protocol Enumerable not implemented for {1, 2, 3}
+    (elixir) lib/enum.ex:1: Enumerable.impl_for!/1
+    (elixir) lib/enum.ex:131: Enumerable.member?/2
+    (elixir) lib/enum.ex:1352: Enum.member?/2
+iex(22)&gt; :a in %{:a =&gt; value}
+** (CompileError) iex:22: undefined function value/0
+    (elixir) expanding macro: Kernel.in/2
+             iex:22: (file)
+</code></pre>
+
+<ul>
+<li>Nối 2 list <em>concatenate</em></li>
+</ul>
+<pre><code>iex(18)&gt; li ++ [2, &quot;Erlang&quot;]
+[1, &quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;, 2, &quot;Erlang&quot;]
+</code></pre>
+
+<ul>
+<li>Trừ 2 list <em>subtract</em></li>
+</ul>
+<pre><code>iex(22)&gt; [1, 2, 3, 2, 1] -- [2]
+[1, 3, 2, 1]
+iex(23)&gt; [1, 2, 3, 2, 1] -- [2, 3]
+[1, 2, 1]
+</code></pre>
+
+<ul>
+<li>"Thêm" phần tử vào list: thực ra là tạo một list mới
+Thêm "Zero" vào index 0</li>
+</ul>
+<pre><code>iex(21)&gt; List.insert_at(li, 0, &quot;Zero&quot;)
+[&quot;Zero&quot;, 1, &quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;]
+</code></pre>
+
+<ul>
+<li>"Thêm" một phần tử vào đầu list (siêu tốc - constant time O(1)):</li>
+</ul>
+<pre><code>iex(27)&gt; l3 = [&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;]
+[&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;]
+iex(28)&gt; [&quot;h&quot; | l3]
+[&quot;h&quot;, &quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;]
+</code></pre>
+
+<ul>
+<li>"Thêm" một phần tử xuống cuối list (chậm, linear time O(n))</li>
+</ul>
+<pre><code>iex(30)&gt; l3 ++ [&quot;t&quot;]
+[&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;]
+</code></pre>
+
+<ul>
+<li>Thay một phần tử của list tại 1 index:</li>
+</ul>
+<pre><code>iex(33)&gt; List.replace_at([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;], 2, &quot;Elixir&quot;)
+[&quot;Python&quot;, &quot;PyMi&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;]
+</code></pre>
+
+<ul>
+<li>"Xoá" phần tử khỏi list (dùng value của phần tử và dùng index):</li>
+</ul>
+<pre><code>iex(31)&gt; List.delete([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;], &quot;Golang&quot;)
+[&quot;Python&quot;, &quot;PyMi&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;]
+iex(32)&gt; List.delete_at([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;], 2)
+[&quot;Python&quot;, &quot;PyMi&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;]
+</code></pre>
+
+<ul>
+<li>Lấy một list con từ list (slice):
+slice(enumerable, start, amount)</li>
+</ul>
+<pre><code>iex(36)&gt;  Enum.slice([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;], 1, 10)
+[&quot;PyMi&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;]
+</code></pre>
+
+<ul>
+<li>Sắp xếp 1 list</li>
+</ul>
+<p>Theo bảng chữ cái</p>
+<pre><code>iex(37)&gt; Enum.sort([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;])
+[&quot;Elixir&quot;, &quot;FAMILUG.org&quot;, &quot;PyMi&quot;, &quot;Python&quot;, &quot;t&quot;]
+</code></pre>
+
+<p>Theo tiêu chí nhất định (function)</p>
+<pre><code>iex(35)&gt; Enum.sort_by([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;, &quot;t&quot;], &amp;String.length/1)
+[&quot;t&quot;, &quot;PyMi&quot;, &quot;Python&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;]
+</code></pre>
+
+<p>https://hexdocs.pm/elixir/Enum.html#content</p>
+<h3 id="map">Map</h3>
+<p>là một cấu trúc dữ liệu có thể gọi là "key-value" store.
+Tên khác (trong ngôn ngữ khác): dictionary, associative array</p>
+<pre><code>map = %{:a =&gt; 1, :b =&gt; 2}
+</code></pre>
+
+<ul>
+<li>Tạo map:
+%{key =&gt; value1, key =&gt; value2}</li>
+</ul>
+<pre><code>iex(47)&gt;  %{:a =&gt; 1, :b =&gt;2}
+%{a: 1, b: 2}
+iex(48)&gt; %{&quot;name&quot; =&gt; &quot;PYMI&quot;, &quot;country&quot; =&gt; &quot;VN&quot;}
+%{&quot;country&quot; =&gt; &quot;VN&quot;, &quot;name&quot; =&gt; &quot;PYMI&quot;}
+</code></pre>
+
+<ul>
+<li>Đếm số phần tử</li>
+<li>Truy cập value:</li>
+</ul>
+<pre><code>iex(68)&gt; %{:name =&gt; who} = %{:name =&gt; &quot;HVN&quot;}
+%{name: &quot;HVN&quot;}
+iex(69)&gt; who
+&quot;HVN&quot;
+
+iex(44)&gt; map = %{:a =&gt; 1, :b =&gt;2}
+%{a: 1, b: 2}
+iex(46)&gt; map[:b]
+2
+iex(47)&gt; map[:c]
+nil
+</code></pre>
+
+<p>Hay</p>
+<pre><code>iex(60)&gt; Map.get(map, :b)
+2
+</code></pre>
+
+<p>Truy cập 1 key không tồn tại sẽ trả về nil.</p>
+<ul>
+<li>Kiểm tra key có trong map không</li>
+</ul>
+<pre><code>iex(3)&gt; Map.has_key?(%{:name =&gt; &quot;HVN&quot;}, :age)
+false
+</code></pre>
+
+<ul>
+<li>"Thêm" key-value mới:</li>
+</ul>
+<pre><code>iex(62)&gt; Map.put(%{:a =&gt; 1}, :h, 4)
+%{a: 1, h: 4}
+</code></pre>
+
+<ul>
+<li>Xoá key-value:</li>
+</ul>
+<pre><code>iex(1)&gt; Map.delete(%{:name =&gt; &quot;HVN&quot;, :age =&gt; 27}, :age)
+%{name: &quot;HVN&quot;}
+</code></pre>
+
+<p>Xoá key không tồn tại không ảnh hưởng gì:</p>
+<pre><code>iex(2)&gt; Map.delete(%{:name =&gt; &quot;HVN&quot;, :age =&gt; 27}, :language)
+%{age: 27, name: &quot;HVN&quot;}
+</code></pre>
+
+<ul>
+<li>
+<p>Duyệt qua từng key # TODO</p>
+</li>
+<li>
+<p>Biến thành list các tuple key-value:</p>
+</li>
+</ul>
+<pre><code>iex(63)&gt; Map.to_list(%{:name =&gt; &quot;HVN&quot;, :age =&gt; 27})
+[age: 27, name: &quot;HVN&quot;]
+</code></pre>
+
+<ul>
+<li>Update value của 1 key đã trong map (không thêm):</li>
+</ul>
+<pre><code>iex(65)&gt; %{ map | :b =&gt; 5}
+%{a: 1, b: 5}
+iex(66)&gt; %{ map | :c =&gt; 5}
+** (KeyError) key :c not found in: %{a: 1, b: 2}
+</code></pre>
+
+<ul>
+<li>Truy cập các atom key bằng <code>.</code>:</li>
+</ul>
+<pre><code>iex(66)&gt; student = %{:name =&gt; &quot;HVN&quot;}
+%{name: &quot;HVN&quot;}
+iex(67)&gt; student.name
+&quot;HVN&quot;
+</code></pre>
+
+<ul>
+<li>Update value nested dict với <code>put_in/2</code>:</li>
+</ul>
+<pre><code>iex(70)&gt; users = [hvn: %{name: &quot;HVN&quot;, age: 27, language: [&quot;Erlang&quot;, &quot;Elixir&quot;, &quot;Python&quot;]},
+hails: %{name: &quot;HaiLS&quot;, age: 26, language: [&quot;Golang&quot;, &quot;JS&quot;]}]
+[hvn: %{age: 27, language: [&quot;Erlang&quot;, &quot;Elixir&quot;, &quot;Python&quot;], name: &quot;HVN&quot;},
+ hails: %{age: 26, language: [&quot;Golang&quot;, &quot;JS&quot;], name: &quot;HaiLS&quot;}]
+
+iex(72)&gt; put_in users[:hvn].age, 29
+[hvn: %{age: 29, language: [&quot;Erlang&quot;, &quot;Elixir&quot;, &quot;Python&quot;], name: &quot;HVN&quot;},
+ hails: %{age: 26, language: [&quot;Golang&quot;, &quot;JS&quot;], name: &quot;HaiLS&quot;}]
+</code></pre>
+
+<p>Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module <code>Enum</code> dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như <code>List</code>, <code>String</code>.</p>
+<h2 id="pattern-matching">Pattern matching</h2>
+<p><code>=</code> : the match operator
+- Khi gán biến, biến phải nằm bên trái dấu <code>=</code></p>
+<pre><code>iex(7)&gt; x = 5
+5
+iex(8)&gt; 6 = y
+** (CompileError) iex:8: undefined function y/0
+</code></pre>
+
+<ul>
+<li>Vế trái có thể là kiểu dữ liệu phức tạp hơn, dùng để "destructuring" hay "unpacking" dữ liệu phía tay phải.
+Số phần tử 2 bên phải bằng nhau, cùng kiểu:</li>
+</ul>
+<pre><code>iex(18)&gt; {name, age} = {&quot;PyMI.vn&quot;, 2}
+{&quot;PyMI.vn&quot;, 2}
+iex(19)&gt; name
+&quot;PyMI.vn&quot;
+iex(20)&gt; age
+2
+
+iex(1)&gt; [x, y, z] = [1, 2, 4]  # list
+[1, 2, 4]
+iex(2)&gt; x
+1
+iex(3)&gt; z
+4
+</code></pre>
+
+<p>Khi bên phải chứa giá trị thay vì biến, 2 bên chỉ match nhau nếu giá trị bên tay trái match giá trị bên tay phải:</p>
+<pre><code>iex(4)&gt; {:ok, 1, salary} = {:ok, 1, 15}
+{:ok, 1, 15}
+iex(5)&gt; {:ok, 1, income} = {:ok, 3, 20}
+** (MatchError) no match of right hand side value: {:ok, 3, 20}
+
+iex(10)&gt; {x, x} = {1, 1}
+{1, 1}
+iex(11)&gt; {x, x} = {1, 2}
+** (MatchError) no match of right hand side value: {1, 2}
+
+
+</code></pre>
+
+<p>Khi 2 bên không "match", MatchError sẽ xảy ra.</p>
+<ul>
+<li>Matching với cú pháp [head | tail]:</li>
+</ul>
+<pre><code>iex(5)&gt; [h | t] = [1, 2, 3, 4]
+[1, 2, 3, 4]
+iex(6)&gt; h
+1
+iex(7)&gt; t
+[2, 3, 4]
+</code></pre>
+
+<p>Giống như gọi function <code>hd</code> và <code>tl</code>:</p>
+<pre><code>iex(8)&gt; hd [1, 2, 3, 4]
+1
+iex(9)&gt; tl [1, 2, 3, 4]
+[2, 3, 4]
+</code></pre>
+
+<p>Cú pháp này rõ ràng không match list rỗng:</p>
+<pre><code>iex(10)&gt; [h | t] = []
+** (MatchError) no match of right hand side value: []
+
+</code></pre>
+
+<ul>
+<li>Truy cập giá trị của một biến thay vì gán lại nó bằng <code>^</code> - pin operator:</li>
+</ul>
+<pre><code>iex(11)&gt; x = 5
+5
+iex(12)&gt; x = 7
+7
+iex(13)&gt; x
+7
+iex(14)&gt; ^x = 8
+** (MatchError) no match of right hand side value: 8
+Vì giống như viết: 7 = 8
+iex(14)&gt; 7 = 8
+** (MatchError) no match of right hand side value: 8
+</code></pre>
+
+<h2 id="control-flow-case-cond-if-unless-doend">Control flow: case, cond, if, unless, do/end</h2>
+<h3 id="if">if</h3>
+<p>if/2 là một function, tức nó sẽ trả về một giá trị sau khi chạy. Khác với Python hay nhiều ngôn ngữ khác, if trong Python là một "statement" (câu lệnh), và nó chỉ thực hiện điều khiển luồng chứ không trả về giá trị nào.
+(PS: thực sự if/2 mà 1 macro - khái niệm macro sẽ được nói sau)</p>
+<pre><code>iex(15)&gt; k = if 5 &gt; 4 do
+...(15)&gt; &quot;yeah&quot;
+...(15)&gt; end
+&quot;yeah&quot;
+iex(16)&gt; k
+&quot;yeah&quot;
+</code></pre>
+
+<p>if/2 trả về nil nếu điều kiện nó nhận được trả về false hay nil.</p>
+<pre><code>iex(17)&gt; h = if 5 &lt; 4 do
+...(17)&gt; &quot;hey&quot;
+...(17)&gt; end
+nil
+iex(18)&gt; h
+nil
+</code></pre>
+
+<p>Mẫu cú pháp:</p>
+<pre><code>if condition do
+SOMETHING
+end
+</code></pre>
+
+<p><code>if</code> có thể đi kèm với <code>else</code>:</p>
+<pre><code>iex(19)&gt; m = if 5 &lt; 4 do
+...(19)&gt; &quot;smaller&quot;
+...(19)&gt; else
+...(19)&gt; &quot;bigger&quot;
+...(19)&gt; end
+&quot;bigger&quot;
+iex(20)&gt; m
+&quot;bigger&quot;
+</code></pre>
+
+<p>Trong Elixir chỉ có <code>if/else/end</code> không có elif như trong Python, khi cần xử lý nhiều trường hợp, ta có thể dùng cond.</p>
+<p>Đọc thêm: https://hexdocs.pm/elixir/Kernel.html#if/2</p>
+<h3 id="cond">cond</h3>
+<p><code>cond do ... end</code> cho phép xử lý nhiều điều kiện, giống như elif hay else if trong các ngôn ngữ khác:</p>
+<pre><code>iex(24)&gt; x = 18
+18
+iex(25)&gt; cond do
+...(25)&gt;   x &lt; 18 -&gt;
+...(25)&gt;     &quot;Not permitted&quot;
+...(25)&gt;   x == 18 -&gt;
+...(25)&gt;     &quot;Okay&quot;
+...(25)&gt;   x &gt; 18 -&gt;
+...(25)&gt;     &quot;Too old&quot;
+...(25)&gt; end
+&quot;Okay&quot;
+</code></pre>
+
+<h3 id="unless">unless</h3>
+<p>Như if, nhưng ngược lại.</p>
+<pre><code>iex(26)&gt; x = 18
+18
+iex(27)&gt; unless x &lt; 18 do
+...(27)&gt;   &quot;got this&quot;
+...(27)&gt; end
+&quot;got this&quot;
+iex(28)&gt; if x &lt; 18 do
+...(28)&gt;   &quot;no&quot;
+...(28)&gt; end
+nil
+</code></pre>
+
+<h3 id="case">case</h3>
+<p><code>case</code> sử dụng pattern matching, và chỉ dừng lại khi ta tìm thấy giá trị nào match. Ta thấy <code>case</code> chỉ dùng để kiểm tra xem 1 giá trị có bằng một giá trị khác, chứ không dùng so sánh &gt;, &lt; ... như <code>if</code>.</p>
+<pre><code>iex(22)&gt; case 5 do
+...(22)&gt;   4 -&gt;
+...(22)&gt;
+...(22)&gt; &quot;Won't match&quot;
+...(22)&gt; _ -&gt;
+...(22)&gt; &quot;will match&quot;
+...(22)&gt; end
+&quot;will match&quot;
+</code></pre>
+
+<pre><code>iex(23)&gt; case {1, 2, 3} do
+...(23)&gt;   {1, x, 3} when x &gt; 0 -&gt;
+...(23)&gt;     &quot;will match&quot;
+...(23)&gt;   _ -&gt;
+...(23)&gt;     &quot;Would match, if guard cond were not sastified&quot;
+...(23)&gt; end
+&quot;will match&quot;
+</code></pre>
+
+<p><code>when x &gt; 0</code> gọi là guard condition. Ta thấy <code>case</code> cũng là một macro chứ không phải "statement" như trong các ngôn ngữ khác.</p>
+<p>Cú pháp:</p>
+<pre><code>case SOMETHING do
+  CLAUSE1 [GUARD] -&gt;
+      &quot;OTHERTHING&quot;
+  CLAUSE2 [GUARD] -&gt;
+     ...
+  _ -&gt;
+     &quot;LAST PATTERN MATCH REMAIN&quot;
+end
+</code></pre>
+
+<p>Nếu không clause nào match, error sẽ được raise:</p>
+<pre><code>iex(24)&gt; case :ok do
+...(24)&gt;   :error -&gt;
+...(24)&gt;     &quot;Not match&quot;
+...(24)&gt; end
+** (CaseClauseError) no case clause matching: :ok
+
+</code></pre>
+
+<h3 id="guard">Guard</h3>
+<p>Trong guard không được dùng &amp;&amp; || !
+Error trong guard sẽ khiến guard fail.</p>
+<h3 id="doend">do/end</h3>
+<p>Trong <code>if</code> <code>unless</code> <code>cond</code> <code>case</code> đều có dùng <code>do</code> và
+kết thúc bằng <code>end</code>.</p>
+<pre><code>if true do
+...
+end
+</code></pre>
+
+<p>Tương đương với:</p>
+<pre><code>if true, do: (
+...
+)
+</code></pre>
+
+<p><code>do/end</code> là syntactix sugar (cú pháp để viết cho dễ).</p>
+<h2 id="function">Function</h2>
+<p>Function phải được định nghĩa trong module.</p>
+<p>Đoạn code sau định nghĩa module <code>Math</code> và function <code>sum</code>:</p>
+<pre><code>defmodule Math do
+  def sum(a, b) do
+    a + b
+  end
+end
+</code></pre>
+
+<p>hoặc</p>
+<pre><code>defmodule Hacker, do: def hack(x), do: x*2
+</code></pre>
+
+<p>khi chỉ có 1 function và function chỉ có 1 dòng.</p>
+<p><code>defmodule</code> và <code>def</code> đều là các macro.</p>
+<h3 id="private-function">Private function</h3>
+<p>Định nghĩa bằng macro <code>defp/2</code>, từ module khác không thể chạy các function này.</p>
+<h3 id="ky-hieu-notation">Ký hiệu (notation)</h3>
+<p>Khi nhắc tới function, trong Elixir dùng ký hiệu:
+<code>name/arity</code> với name là tên , và arity là số argument function đó nhận.</p>
+<p>Math.sum ở trên ký hiệu là <code>Math.sum/2</code></p>
+<h3 id="multiple-clause-function">Multiple clause function</h3>
+<p>Một function có thể có nhiều <code>clause</code>:</p>
+<p>Mỗi "clause" thường đi kèm một "guard", nếu argument pass vào match với argument của clause và guard đi kèm trả về <code>true</code>, clause đó sẽ được gọi.</p>
+<pre><code>defmodule Foo do
+  def rprint(msg, n) when n &lt;= 1 do
+    IO.puts msg
+  end
+
+  def rprint(msg, n) do
+    IO.puts msg
+    rprint(msg, n - 1)
+  end
+end
+
+Foo.rprint(&quot;Hello&quot;, 5)
+</code></pre>
+
+<h3 id="function-capturing">Function capturing</h3>
+<h4 id="todo">TODO</h4>
+<h3 id="default-argument">Default argument</h3>
+<pre><code>def join(a, b, sep \\ &quot;,&quot;) do
+  a &lt;&gt; sep &lt;&gt; b
+end
+</code></pre>
+
+<p>"," là default argument, khi gọi funtion mà không pass giá trị cho argument <code>sep</code>, <code>sep</code> sẽ sử dụng giá trị mặc định ",".</p>
+<h3 id="cac-phan-cua-mot-function">Các phần của một function</h3>
+<pre><code>def sum(a, b) do
+  a + b
+end
+</code></pre>
+
+<ul>
+<li>Function head: <code>def sum(a, b)</code></li>
+<li>Function body: từ <code>do</code> đến <code>end</code></li>
+</ul>
+<p>Khi function với default value có nhiều mệnh đề, phải khai báo một function head để khai báo giá trị default.</p>
+<h4 id="todo-more-detail">TODO more detail</h4>
+<h2 id="module">Module</h2>
+<h3 id="compile">Compile</h3>
+<p>Có thể viết module vào file <code>NAME.ex</code>: <code>math.ex</code>.</p>
+<p>Compile module:</p>
+<pre><code>$ elixirc math.ex  # tạo ra file Elixir.Math.beam
+</code></pre>
+
+<p>Bật <code>iex</code> cùng thư mục sẽ tự động load module, chỉ việc gọi.</p>
+<h3 id="script">Script</h3>
+<p>Lưu file với đuôi .exs, Elixir sẽ hiểu đó là 1 "script" và sẽ không tạo file có đuôi .beam nữa, chạy nó như chạy các script khác (Python, bash...):</p>
+<pre><code>$ elixir math.exs
+</code></pre>
+
+<h2 id="loop-bang-recursion-reduce-va-map">Loop bằng recursion, reduce và map</h2>
+<p>Trong Elixir, mọi thứ đều là "immutable" (không thay đổi được), vì vậy những khái niệm để lặp như trong các ngôn ngữ C, Python, Java, PHP, Golang ... sẽ không được ứng dụng:</p>
+<pre><code>for i in 'Elixir':
+    print(i)
+</code></pre>
+
+<p>Ở vòng lặp for này, giá trị của i lần lượt thay đổi thành các ký tự trong "Elixir" -&gt; không đảm bảo được tính immutable của Elixir.</p>
+<pre><code>i = 0
+while True:
+    print(i)
+    i = i + 1
+</code></pre>
+
+<p>Tương tự, trong vòng lặp while này i cũng thay đổi sau mỗi vòng lặp, không đảm bảo tính immutable.</p>
+<p>Elixir hay các ngôn ngữ lập trình hàm (functional programming language) khác sử dụng recursive function để tạo hiệu ứng/ kết quả như loop.</p>
+<h3 id="recursive-function">Recursive function</h3>
+<p>Là function mà bên trong phần body, nó tự gọi đến chính nó cho đến khi gặp một điều kiện để dừng lại. Sẽ không có gì bị thay đổi khi dùng recursive function, bởi ta sẽ sinh ra giá trị mới, chứ không thay đổi giá trị cũ. Mọi khái niệm sẽ rõ ràng khi thử với function tính giai thừa của 1 số:</p>
+<p>Giai thừa của một số nguyên không âm được tính bằng tích của số đó nhân với giai thửa của số nhỏ hơn nó 1 đơn vị. Hay viết ở dạng công thức toán:
+factorial(n) = n * factorial(n - 1)
+khi n = 0 thì factorial(0) = 1. # điều kiện dừng</p>
+<p>Thử tính factorial của 3:</p>
+<p>factorial(3) = 3 * factorial(2)
+factorial(2) = 2 * factorial(1)
+factorial(1) = 1 * factorial(0)
+factorial(0) = 1</p>
+<p>Sau khi đã chạm đến điều kiện dựng, ta lấy kết quả thu được thay ngược lên trên.
+factorial(1) = 1 * factorial(0) = 1 * 1 = 1
+factorial(2) = 2 * factorial(1) = 2 * 1 = 2
+factorial(3) = 3 * factorial(2) = 3 * 2 = 6</p>
+<p>Kết quả là factorial(3) bằng 6.</p>
+<pre><code>defmodule Rescusion do
+  def fact(n) when n &lt;= 0 do
+    1
+  end
+
+  def fact(n) do
+    n * fact(n - 1)
+  end
+end
+</code></pre>
+
+<p>Trong bài này, code của Elixir chỉ đơn giản là chuyển công thức toán học thành code.</p>
+<h3 id="map_1">Map</h3>
+<p>Một việc làm thường xuyên khi sử dụng loop là để biến 1 tập giá trị, thành 1 tập giá trị khác.</p>
+<p>Ví dụ, cho một list <code>L = [1, 2, 3 ,4]</code>, cần thu được kết quả là một list mà phần tử của nó là mỗi phần tử của <code>L</code> nhân với 2.</p>
+<p>Việc biến một tập thành một tập khác bằng cách gọi function với mỗi phần tử của tập gọi là "mapping" (ánh xạ trong toán học).
+Ta "map" một phần tử từ tập ban đầu thành phần tử trong tập mới.</p>
+<p>Viết function để map list nói trên:</p>
+<pre><code>iex(41)&gt; defmodule Double do
+...(41)&gt;   def double_each([head | tail]) do
+...(41)&gt;     [head * 2 | double_each(tail)]
+...(41)&gt;   end
+...(41)&gt;
+...(41)&gt;   def double_each([]) do
+...(41)&gt;     []
+...(41)&gt;   end
+...(41)&gt; end
+{:module, Double,
+...
+iex(42)&gt; Double.double_each([1,2,3,4])
+[2, 4, 6, 8]
+</code></pre>
+
+<p>Có thể dùng function có sẵn <code>Enum.map/2</code> để thực hiện mapping:</p>
+<pre><code>iex(45)&gt; Enum.map([1,2,3,4], fn(x) -&gt; x * 2 end)
+[2, 4, 6, 8]
+</code></pre>
+
+<h3 id="reduce">Reduce</h3>
+<p>Một ứng dụng khác thường dùng khi lặp là để tính một giá trị nào đó sẽ thu được sau khi duyệt qua tất cả giá trị trong tập, như tính tổng, tích của tập.</p>
+<p>Ở đây ta biến từ 1 tập nhiều phần tử thành 1 giá trị cuối cùng. Việc "thu gọn" này có tên là "reducing".</p>
+<p>Map và reduce là 2 thuật toán cốt lõi của "big data".</p>
+<pre><code>iex(46)&gt; defmodule Reduce do
+...(46)&gt;   def sum_list([head | tail], accumulator) do
+...(46)&gt;     sum_list(tail, head + accumulator)
+...(46)&gt;   end
+...(46)&gt;
+...(46)&gt;   def sum_list([], accumulator) do
+...(46)&gt;     accumulator
+...(46)&gt;   end
+...(46)&gt; end
+
+iex(47)&gt; Reduce.sum_list([1,2,3], 0)
+6
+</code></pre>
+
+<p>Hay dùng module có sẵn <code>Enum.reduce/2</code>:</p>
+<pre><code>iex(48)&gt; Enum.reduce([1,2,3], 0, fn(x, acc) -&gt; x + acc end)
+6
+</code></pre>
+
+<h2 id="io-xu-ly-du-lieu-vao-ra">IO - xử lý dữ liệu vào ra.</h2>
+<h3 id="in-ra-man-hinh">In ra màn hình</h3>
+<p>Mặc dù hầu hết các sách dạy lập trình / trường học sẽ luôn bắt đầu bằng việc dạy "print" ra màn hình (và đi kèm là đọc những gì người dùng nhập vào), nhưng trên thực tế, có khoảng &lt; 5% người thực sự dùng print trong chương trình của mình.</p>
+<p>Hãy thử nghĩ với người dùng Windows, có bao giờ bạn bật <code>cmd</code> lên và gõ lệnh? Các chương trình đều giao tiếp với người dùng qua giao diện đồ hoạ / web, chứ không phải các dòng lệnh. Những người làm việc với dòng lệnh chủ yếu là các Linux Sysadmin / lập trình viên / hacker.
+Nếu bạn là một web developer, bạn đưa nội dung ra trang web chứ không print nó.</p>
+<p>Elixir sử dụng module <code>IO</code> cho các thao tác này:</p>
+<pre><code>iex(49)&gt; IO.puts &quot;Hello&quot;
+Hello
+:ok
+iex(50)&gt; IO.puts &quot;Hello FAMILUG&quot;
+Hello FAMILUG
+:ok
+iex(51)&gt; answer = IO.gets(&quot;yes or no? &quot;)
+yes or no? yes
+&quot;yes\n&quot;
+iex(52)&gt; IO.puts(answer)
+yes
+
+:ok
+</code></pre>
+
+<p>Có thể ghi ra stderr:</p>
+<pre><code>iex(53)&gt; IO.puts(:stderr, &quot;Hello standard error&quot;)
+Hello standard error
+:ok
+</code></pre>
+
+<h3 id="oc-ghi-file">Đọc ghi file</h3>
+<p>Module <code>File</code> chứa các function để tương tác với file, từ đọc, ghi, xoá, copy...</p>
+<pre><code>iex(53)&gt; IO.puts(:stderr, &quot;Hello standard error&quot;)
+Hello standard error
+:ok
+iex(54)&gt; {:ok, file} = File.open(&quot;hellofile.txt&quot;, [:write])
+{:ok, #PID&lt;0.260.0&gt;}
+iex(55)&gt; IO.binwrite(file, &quot;Hello world!&quot;)
+:ok
+iex(56)&gt; File.close(file)
+:ok
+iex(57)&gt; File.read(&quot;hellofile.txt&quot;)
+{:ok, &quot;Hello world!&quot;}
+</code></pre>
+
+<p>Các function xử lý file:</p>
+<p><code>File.rm/1</code>, <code>File.mkdir/1</code>, <code>File.cp_r/2</code>, ...</p>
+<h2 id="xu-ly-loi">Xử lý lỗi</h2>
+<h3 id="errror-hay-exception">Errror (hay exception)</h3>
+<pre><code>iex(58)&gt; &quot;abc&quot; + 1
+** (ArithmeticError) bad argument in arithmetic expression
+    :erlang.+(&quot;abc&quot;, 1)
+iex(58)&gt; raise &quot;oizoioi&quot;
+** (RuntimeError) oizoioi
+
+iex(58)&gt; raise ArgumentError, message: &quot;invalid argument&quot;
+** (ArgumentError) invalid argument
+
+</code></pre>
+
+<h3 id="tryrescuecatchafter">try/rescue/catch/after</h3>
+<p>Tương tự như try/except trong Python hay try/catch trong Java, Elixir có try/recuse và try/catch, nhưng trong Elixir, sử dụng chúng là điều không nên / hiếm khi dùng.</p>
+<pre><code>iex(61)&gt; try do
+...(61)&gt;   r = 1/0
+...(61)&gt; rescue
+...(61)&gt;   ArithmeticError -&gt; &quot;Error&quot;
+...(61)&gt; end
+&quot;Error&quot;
+</code></pre>
+
+<p>Vậy Elixir làm gì khi gặp lỗi? có "exception" thì xử lý thế nào?
+Trong triết lý của Erlang/Elixir, "lỗi" là một phần của chương trình, và hệ thống nằm dưới ngôn ngữ (BEAM/OTP) sẽ xử lý chúng một cách ngon lành. Tạm thời bỏ qua ở đây.</p>
+<h2 id="bat-au-code-mot-project">Bắt đầu code một project</h2>
+<p>Đến đây đã đủ các công cụ cơ bản để viết những chương trình bình thường / luyện tập với các thuật toán ... cho đến khi quen với ngôn ngữ.
+Elixir còn nhiều khái niệm khác, đặc biệt được đưa ra để xử lý trong môi trường "phân tán", nhưng tập trung vào những tính năng đó ngay bây giờ chỉ làm cho người học bị quá tải với những khái niệm mới lạ, trong khi vẫn chưa nắm rõ phần cơ bản. Vậy nên, các khái niệm "khác" đó sẽ được dành cho phần sau. Còn bây giờ, tạo một project Elixir và code:</p>
+<p><code>Mix</code> là "build tool" của Elixir, để tạo một project mới, dùng câu lệnh:</p>
+<pre><code> mix new hello_familug
+* creating README.md
+* creating .gitignore
+* creating mix.exs
+* creating config
+* creating config/config.exs
+* creating lib
+* creating lib/hello_familug.ex
+* creating test
+* creating test/test_helper.exs
+* creating test/hello_familug_test.exs
+
+Your Mix project was created successfully.
+You can use &quot;mix&quot; to compile it, test it, and more:
+
+    cd hello_familug
+    mix test
+
+Run &quot;mix help&quot; for more commands.
+</code></pre>
+
+<p>Sửa nội dung file <code>lib/hello_familug.ex</code> như sau:</p>
+<pre><code>defmodule HelloFamilug do
+  def main(args) do
+    IO.puts &quot;Hello FAMILUG!&quot;
+  end
+end
+</code></pre>
+
+<p>Thêm dòng:</p>
+<pre><code>      escript: escript,
+</code></pre>
+
+<p>vào sau dòng</p>
+<pre><code>      elixir: &quot;~&gt; VERSION&quot;,
+</code></pre>
+
+<p>trong mix.exs.</p>
+<p>Thêm function sau vào trong file <code>mix.exs</code></p>
+<pre><code>  def escript do
+    [main_module: HelloFamilug]  # tên module sẽ được chạy
+  end
+</code></pre>
+
+<p>Compile và chạy:</p>
+<pre><code>$ mix escript.build
+Compiling 1 file (.ex)
+warning: variable args is unused
+  lib/hello_familug.ex:2
+
+Generated hello_familug app
+Generated escript hello_familug with MIX_ENV=dev
+$ ./hello_familug
+Hello FAMILUG!
+</code></pre>
+
+<p>Sửa lại code để nhận vào input từ người dùng:</p>
+<pre><code>defmodule HelloFamilug do
+  def main(args) do
+    {_, [name], _} = OptionParser.parse(args)
+    IO.puts &quot;Hello &quot; &lt;&gt; name
+  end
+end
+</code></pre>
+
+<p>Tạm thời bỏ qua chi tiết OptionParser.parse/1 làm gì,
+build lại và gọi với một cái tên:</p>
+<pre><code>$ mix escript.build
+Compiling 1 file (.ex)
+Generated escript hello_familug with MIX_ENV=dev
+$ ./hello_familug Python
+Hello Python
+</code></pre>
+
+<p>Chương trình dòng lệnh (CLI tool) không phải là thế mạnh của Elixir, nhưng nó hoàn toàn có thể làm được và không hề phức tạp. Với từng ấy đủ để ta bắt đầu cuộc hành trình vào những giấc mơ sâu vô tận trong thế giới của nhà giả kim và Elixir (thuốc tiên).</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '.';</script>
+        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
+        <script src="./js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 0.16.3
+Build Date UTC : 2017-05-10 07:12:51
+-->
