@@ -1334,3 +1334,10 @@ Hello Python
 ```
 
 Chương trình dòng lệnh (CLI tool) không phải là thế mạnh của Elixir, nhưng nó hoàn toàn có thể làm được và không hề phức tạp. Với từng ấy đủ để ta bắt đầu cuộc hành trình vào những giấc mơ sâu vô tận trong thế giới của nhà giả kim và Elixir (thuốc tiên).
+
+
+## FAQs
+### Tại sao tên lại nhảm nhí vậy "học Elixir trong một giấc mơ"?
+
+Vì việc đọc tiếng Anh ở Việt Nam rất "thảm hoạ".
+Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình viên lại đọc là "Pi-thông". Vậy nên tôi đặt tên có vần để người học có thể đọc đúng "Học `i lík sơ` trong một giấc mơ".
