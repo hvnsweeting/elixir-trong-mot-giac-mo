@@ -897,6 +897,40 @@ if true, do: (
 `do/end` là syntactix sugar (cú pháp để viết cho dễ).
 
 ## Function
+
+### Gọi function (calling):
+
+Cú pháp thông thường:
+
+```
+iex(1)> String.to_integer(String.trim("  42 \n "))
+42
+iex(7)> String.split("42-15\n17", ["-", "\n"])
+["42", "15", "17"]
+```
+
+Cú pháp bỏ dấu `()`:
+
+```
+iex(8)> String.split "42-15\n17", ["-", "\n"]
+["42", "15", "17"]
+
+iex(10)> Enum.map(String.split("42-15\n17", ["-", "\n"]), fn(x) -> String.to_integer(x) end)
+[42, 15, 17]
+```
+
+#### Toán tử pipe (pipe operator)
+Cú pháp sử dụng "pipe", dữ liệu sẽ chạy từ output của 1 function, qua pipe và trở thành argument đầu tiên của function tiếp theo (giống Pipeline trên UNIX shell).
+
+```
+iex(11)> String.split("42-15\n17", ["-", "\n"]) |> Enum.map(fn(x) -> String.to_integer(x) end)
+[42, 15, 17]
+
+iex(23)> 1..1000 |> Enum.filter(fn(x) -> (rem(x, 3) == 0 || rem(x, 5) == 0) end) |> Enum.sum
+234168
+```
+
+### Định nghĩa function
 Function phải được định nghĩa trong module.
 
 Đoạn code sau định nghĩa module `Math` và function `sum`:
