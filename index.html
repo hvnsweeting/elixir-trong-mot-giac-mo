@@ -62,6 +62,7 @@
             <li><a href="#io-xu-ly-du-lieu-vao-ra">IO - xử lý dữ liệu vào ra.</a></li>
             <li><a href="#xu-ly-loi">Xử lý lỗi</a></li>
             <li><a href="#bat-au-code-mot-project">Bắt đầu code một project</a></li>
+            <li><a href="#faqs">FAQs</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -871,6 +872,32 @@ end
 
 <p><code>do/end</code> là syntactix sugar (cú pháp để viết cho dễ).</p>
 <h2 id="function">Function</h2>
+<h3 id="goi-function-calling">Gọi function (calling):</h3>
+<p>Cú pháp thông thường:</p>
+<pre><code>iex(1)&gt; String.to_integer(String.trim(&quot;  42 \n &quot;))
+42
+iex(7)&gt; String.split(&quot;42-15\n17&quot;, [&quot;-&quot;, &quot;\n&quot;])
+[&quot;42&quot;, &quot;15&quot;, &quot;17&quot;]
+</code></pre>
+
+<p>Cú pháp bỏ dấu <code>()</code>:</p>
+<pre><code>iex(8)&gt; String.split &quot;42-15\n17&quot;, [&quot;-&quot;, &quot;\n&quot;]
+[&quot;42&quot;, &quot;15&quot;, &quot;17&quot;]
+
+iex(10)&gt; Enum.map(String.split(&quot;42-15\n17&quot;, [&quot;-&quot;, &quot;\n&quot;]), fn(x) -&gt; String.to_integer(x) end)
+[42, 15, 17]
+</code></pre>
+
+<h4 id="toan-tu-pipe-pipe-operator">Toán tử pipe (pipe operator)</h4>
+<p>Cú pháp sử dụng "pipe", dữ liệu sẽ chạy từ output của 1 function, qua pipe và trở thành argument đầu tiên của function tiếp theo (giống Pipeline trên UNIX shell).</p>
+<pre><code>iex(11)&gt; String.split(&quot;42-15\n17&quot;, [&quot;-&quot;, &quot;\n&quot;]) |&gt; Enum.map(fn(x) -&gt; String.to_integer(x) end)
+[42, 15, 17]
+
+iex(23)&gt; 1..1000 |&gt; Enum.filter(fn(x) -&gt; (rem(x, 3) == 0 || rem(x, 5) == 0) end) |&gt; Enum.sum
+234168
+</code></pre>
+
+<h3 id="inh-nghia-function">Định nghĩa function</h3>
 <p>Function phải được định nghĩa trong module.</p>
 <p>Đoạn code sau định nghĩa module <code>Math</code> và function <code>sum</code>:</p>
 <pre><code>defmodule Math do
@@ -1181,7 +1208,11 @@ $ ./hello_familug Python
 Hello Python
 </code></pre>
 
-<p>Chương trình dòng lệnh (CLI tool) không phải là thế mạnh của Elixir, nhưng nó hoàn toàn có thể làm được và không hề phức tạp. Với từng ấy đủ để ta bắt đầu cuộc hành trình vào những giấc mơ sâu vô tận trong thế giới của nhà giả kim và Elixir (thuốc tiên).</p></div>
+<p>Chương trình dòng lệnh (CLI tool) không phải là thế mạnh của Elixir, nhưng nó hoàn toàn có thể làm được và không hề phức tạp. Với từng ấy đủ để ta bắt đầu cuộc hành trình vào những giấc mơ sâu vô tận trong thế giới của nhà giả kim và Elixir (thuốc tiên).</p>
+<h2 id="faqs">FAQs</h2>
+<h3 id="tai-sao-ten-lai-nham-nhi-vay-hoc-elixir-trong-mot-giac-mo">Tại sao tên lại nhảm nhí vậy "học Elixir trong một giấc mơ"?</h3>
+<p>Vì việc đọc tiếng Anh ở Việt Nam rất "thảm hoạ".
+Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình viên lại đọc là "Pi-thông". Vậy nên tôi đặt tên có vần để người học có thể đọc đúng "Học <code>i lík sơ</code> trong một giấc mơ".</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -1220,5 +1251,5 @@ Hello Python
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-10 07:12:51
+Build Date UTC : 2017-05-12 06:42:41
 -->
