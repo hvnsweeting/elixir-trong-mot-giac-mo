@@ -37,6 +37,8 @@ Erlang/OTP 19 [erts-8.0.2] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe]
 Elixir 1.3.2
 ```
 
+PS: trong bài có một số đoạn so sánh với tính năng tương tự trên Python - bởi tác giả là người có kinh nghiệm với Python - giúp các lập trình viên Python dễ kết nối các khái niệm. Phần so sánh này hoàn toàn không cần thiết với người không biết Python và có thể bỏ qua.
+
 ## Các kiểu dữ liệu cơ bản
 
 ### Integer
