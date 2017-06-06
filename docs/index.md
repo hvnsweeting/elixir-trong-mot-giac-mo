@@ -933,9 +933,9 @@ iex(23)> 1..1000 |> Enum.filter(fn(x) -> (rem(x, 3) == 0 || rem(x, 5) == 0) end)
 ```
 
 ### Định nghĩa function
-Function phải được định nghĩa trong module.
-
-Đoạn code sau định nghĩa module `Math` và function `sum`:
+Function có tên phải được định nghĩa trong module.
+Function sẽ trả về giá trị cuối cùng nó tính được - không có câu lệnh "return".
+Đoạn code sau định nghĩa module `Math` và function `sum` trả về tổng của 2 argument a, b:
 
 ```
 defmodule Math do
