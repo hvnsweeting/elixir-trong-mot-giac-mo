@@ -1,4 +1,4 @@
-Dù trong Elixir hay Python hay bất cứ ngôn ngữ nào thì code cũng chạy trong process. 
+Dù trong Elixir hay Python hay bất cứ ngôn ngữ nào thì code cũng chạy trong process.
 
 Nhưng process trong Elixir (không phải process cung cấp bởi hệ điều hành mà là process do chính máy ảo BEAM thiết kế và vận hành) có những tính năng vượt trội giúp người dùng có thể dễ dàng viết chương trình chạy đồng thời, phân tán.
 
@@ -44,7 +44,7 @@ iex(14)> self()
 
 When a message is sent to a process, the message is stored in the process mailbox. The receive/1 block goes through the current process mailbox searching for a message that matches any of the given patterns. receive/1 supports guards and many clauses, such as case/2.
 
-## Actor model 
+## Actor model
 Các process trong Elixir có thể gửi message (tin nhắn) cho nhau. Đây là cơ chế hoạt động của Erlang/Elixir khi 2 process cần trao đổi bất kỳ thông tin gì và thường được nhắc tới như "Actor model".
 
 ## Asynchronous /eɪˈsɪŋkrənəs/
@@ -104,6 +104,21 @@ iex(30)> receive do
 
 function `flush/0` giúp "flush" và in tất cả các messages đang nằm trong mailbox.
 
+```elixir
+iex(34)> send self(), 5
+5
+iex(35)> send self(), 7
+7
+iex(36)> send self(), 9
+9
+iex(37)> flush()
+5
+7
+9
+:ok
+```
+
+
 # Tasks
 Task là khái niệm xây dựng trên `spawn/1` để tạo process, nhưng cung cấp nhiều tính năng hơn. Cách dùng tương tự `spawn/1` nhưng trả về tuple {:ok, pid} thay vì PID như `spawn/1`
 
@@ -115,3 +130,72 @@ iex(33)> receive do
 ...(33)> end
 "Got hello from #PID<0.136.0>"
 ```
+
+# Gửi message qua lại giữa 2 process
+Những ví dụ đơn giản trên chỉ gửi message từ một process đến process còn lại mà không hề có phản hồi,
+để process Y phản hồi sau khi nhận được message từ X, Y phải biết "địa chỉ" của X - ở đây là PID. Vì vậy khi gửi message, ta gửi kèm PID của process gửi (giống như gửi thư, muốn nhận phải ghi địa chỉ người nhận). Để quá trình này trông giống như 2 process cùng đang chạy và nói chuyện với nhau, ta sẽ viết function cho process nhận sẽ chạy mãi cho đến khi nhận được message có chứa atom :quit.
+
+Định nghĩa 1 module và viết vào 1 file có tên bất kỳ:
+
+```elixir
+defmodule CoolProcess do
+  def loop() do
+    receive do
+      {:msg, msg, pid} ->
+        send(pid, {:msg, "Got it:" <> msg , self()})
+        loop()
+      {:quit, pid} ->
+        send(pid, {"Goodbye", self()})
+      {_, pid} ->
+        send(pid, {"I dont understand you", self()})
+        loop()
+      _ ->
+        IO.puts "What?"
+        loop()
+    end
+  end
+
+  def start_link do
+    Task.start_link(fn -> loop() end)
+  end
+end
+
+```
+
+Ở mỗi trường hợp (trừ {:quit, pid}), function loop() sẽ gọi lại chính nó, tạo nên một vòng lặp vô hạn, nhưng ta sẽ không bị lỗi gì liên quan đến giới hạn recursive bởi các câu gọi `loop()` đều là câu lệnh cuối cùng, Elixir biết cách xử lý những trường hợp như vậy - và nó có tên là "tail recursive".
+
+Giờ chạy `iex filename.exs` và gọi function của CoolProcess.start_link/0 để tạo một process mới,
+gửi các message đến nó và nhận phản hồi, gửi {:quit, PID} để tắt process (do khối code tương
+ứng khi nhận được :quit không gọi loop() nữa )
+
+```elixir
+iex(3)> {:ok, pid} = CoolProcess.start_link
+{:ok, #PID<0.90.0>}
+iex(4)> Pro
+Process     Protocol
+iex(4)> Process.alive? pid
+true
+iex(5)> send pid, {:msg, "hello", self()}
+{:msg, "hello", #PID<0.84.0>}
+iex(6)> flush()
+{:msg, "Got it:hello", #PID<0.90.0>}
+:ok
+iex(7)> send pid, {:nothing, self()}
+{:nothing, #PID<0.84.0>}
+iex(8)> flush()
+{"I dont understand you", #PID<0.90.0>}
+:ok
+iex(9)> send pid, {:quit, self()}
+{:quit, #PID<0.84.0>}
+iex(10)> flush()
+{"Goodbye", #PID<0.90.0>}
+:ok
+iex(11)> Process.alive? pid
+false
+```
+
+Những khái niệm "process", send, receive không quá phức tạp là phần cốt yếu đểu giúp Erlang/Elixir tạo nên những hệ thống có thể chạy hàng trăm ngàn process cùng một lúc. Khi vấn đề là một, hai process, chúng ta quan tâm đến từng process, nhưng khi bài toán lớn lên, ta sẽ cần quan tâm đến việc làm sao quản lý được nhiều process, và điều khiển chúng chạy thế nào cho phù hợp. Phần #TODO sẽ đi chi tiết vào việc quản lý các process với sức mạnh của OTP.
+
+## Tham khảo
+- https://elixir-lang.org/getting-started/processes.html
+- http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency
