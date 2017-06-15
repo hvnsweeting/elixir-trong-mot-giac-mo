@@ -1185,6 +1185,9 @@ Hello standard error
 :ok
 ```
 
+Để không thêm ký tự newline (`\n`) sau mỗi dòng, sử dụng `IO.write` thay
+vì `IO.puts`.
+
 ### Đọc ghi file
 
 Module `File` chứa các function để tương tác với file, từ đọc, ghi, xoá, copy...
