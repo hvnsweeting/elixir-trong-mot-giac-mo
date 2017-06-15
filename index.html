@@ -51,6 +51,12 @@
                     <li >
                         <a href="after-basic/">After basic</a>
                     </li>
+                    <li >
+                        <a href="http-client/">Http client</a>
+                    </li>
+                    <li >
+                        <a href="process/">Process</a>
+                    </li>
                 </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -925,8 +931,9 @@ iex(23)&gt; 1..1000 |&gt; Enum.filter(fn(x) -&gt; (rem(x, 3) == 0 || rem(x, 5) =
 </code></pre>
 
 <h3 id="inh-nghia-function">Định nghĩa function</h3>
-<p>Function phải được định nghĩa trong module.</p>
-<p>Đoạn code sau định nghĩa module <code>Math</code> và function <code>sum</code>:</p>
+<p>Function có tên phải được định nghĩa trong module.
+Function sẽ trả về giá trị cuối cùng nó tính được - không có câu lệnh "return".
+Đoạn code sau định nghĩa module <code>Math</code> và function <code>sum</code> trả về tổng của 2 argument a, b:</p>
 <pre><code>defmodule Math do
   def sum(a, b) do
     a + b
@@ -1115,6 +1122,8 @@ Hello standard error
 :ok
 </code></pre>
 
+<p>Để không thêm ký tự newline (<code>\n</code>) sau mỗi dòng, sử dụng <code>IO.write</code> thay
+vì <code>IO.puts</code>.</p>
 <h3 id="oc-ghi-file">Đọc ghi file</h3>
 <p>Module <code>File</code> chứa các function để tương tác với file, từ đọc, ghi, xoá, copy...</p>
 <pre><code>iex(53)&gt; IO.puts(:stderr, &quot;Hello standard error&quot;)
@@ -1278,5 +1287,5 @@ Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình 
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-17 02:57:35
+Build Date UTC : 2017-06-15 04:47:33
 -->

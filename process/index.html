@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Process - Lá ngón</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Lá ngón</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                    <li >
+                        <a href="../after-basic/">After basic</a>
+                    </li>
+                    <li >
+                        <a href="../http-client/">Http client</a>
+                    </li>
+                    <li class="active">
+                        <a href="./">Process</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../http-client/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#tao-mot-process">Tạo một process</a></li>
+        <li class="main "><a href="#gui-nhan-message-msd">Gửi nhận message /ˈmɛsɪdʒ/</a></li>
+            <li><a href="#actor-model">Actor model</a></li>
+            <li><a href="#asynchronous-eskrns">Asynchronous /eɪˈsɪŋkrənəs/</a></li>
+            <li><a href="#synchronous-skrns">Synchronous /ˈsɪŋkrənəs/</a></li>
+            <li><a href="#receive">Receive</a></li>
+            <li><a href="#sinh-process-e-gui-message">Sinh process để gửi message</a></li>
+        <li class="main "><a href="#tasks">Tasks</a></li>
+        <li class="main "><a href="#gui-message-qua-lai-giua-2-process">Gửi message qua lại giữa 2 process</a></li>
+            <li><a href="#tham-khao">Tham khảo</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>Dù trong Elixir hay Python hay bất cứ ngôn ngữ nào thì code cũng chạy trong process.</p>
+<p>Nhưng process trong Elixir (không phải process cung cấp bởi hệ điều hành mà là process do chính máy ảo BEAM thiết kế và vận hành) có những tính năng vượt trội giúp người dùng có thể dễ dàng viết chương trình chạy đồng thời, phân tán.</p>
+<p>Khái niệm process/thread luôn là một khái niệm phức tạp / lằng nhằng trong những ngôn ngữ khác nhưng với Elixir/Erlang, nó trở nên đơn giản hơn nhiều.</p>
+<h1 id="tao-mot-process">Tạo một process</h1>
+<p>Để sinh một process và chạy một function trong process đó, dùng function <code>spawn/1</code>, function này trả về PID (process identifier) - một con số để xác định process này, giúp ta có thể gửi tin nhắn cho process này hay tắt nó...</p>
+<pre><code class="elixir">iex(9)&gt; pid = spawn fn -&gt; 1 + 2 end
+#PID&lt;0.93.0&gt;
+</code></pre>
+
+<p>Ngay khi chạy xong function, process sẽ tự kết thúc. Kiểm tra xem process còn sống không:</p>
+<pre><code class="elixir">iex(11)&gt; h Process.alive?/1
+
+Returns true if the process exists and is alive (i.e. it is not exiting and has
+not exited yet). Otherwise, returns false.
+
+pid must refer to a process at the local node.
+
+iex(12)&gt; Process.alive? pid
+false
+</code></pre>
+
+<p>Kết quả là false, tức process của ta đã chết (exit) sau khi nó hoàn thành function.</p>
+<p>Kiểm tra process chính đang chạy chương trình mà ta đang gõ lệnh:</p>
+<pre><code class="elixir">iex(13)&gt; Process.alive? self()
+true
+iex(14)&gt; self()
+#PID&lt;0.80.0&gt;
+</code></pre>
+
+<p><code>self/0</code> trả về PID của process hiện tại.</p>
+<h1 id="gui-nhan-message-msd">Gửi nhận message /ˈmɛsɪdʒ/</h1>
+<p>When a message is sent to a process, the message is stored in the process mailbox. The receive/1 block goes through the current process mailbox searching for a message that matches any of the given patterns. receive/1 supports guards and many clauses, such as case/2.</p>
+<h2 id="actor-model">Actor model</h2>
+<p>Các process trong Elixir có thể gửi message (tin nhắn) cho nhau. Đây là cơ chế hoạt động của Erlang/Elixir khi 2 process cần trao đổi bất kỳ thông tin gì và thường được nhắc tới như "Actor model".</p>
+<h2 id="asynchronous-eskrns">Asynchronous /eɪˈsɪŋkrənəs/</h2>
+<p>Khi process X gửi message tới process Y, message này được chứa trong mailbox của Y. Gửi xong X sẽ tiếp tục công việc của nó chứ không đợi (block) Y nhận hay xử lý message. Cơ chế không đợi này gọi là  asynchronous (có tính bất/không đồng bộ)
+ Cú pháp gửi rất đơn giản:</p>
+<pre><code class="elixir">iex(22)&gt; me = self()
+#PID&lt;0.80.0&gt;
+iex(23)&gt; send me, {:hello, &quot;world&quot;}
+{:hello, &quot;world&quot;}
+iex(24)&gt; send me, {:hello, &quot;PyMi&quot;}
+{:hello, &quot;PyMi&quot;}
+iex(25)&gt; receive do
+...(25)&gt;   msg -&gt; msg
+...(25)&gt; end
+{:hello, &quot;world&quot;}
+iex(26)&gt; receive do
+...(26)&gt;   msg -&gt; msg
+...(26)&gt; end
+{:hello, &quot;PyMi&quot;}
+iex(27)&gt;
+</code></pre>
+
+<p>Message được gửi (từ chính process hiện tại) được chứa trong mailbox, khi dùng <code>receive do... end</code>, ta nhận được từng message theo thứ tự gửi trước nhận trước (FIFO - queue).</p>
+<h2 id="synchronous-skrns">Synchronous /ˈsɪŋkrənəs/</h2>
+<p>Với ngôn ngữ khác, như Golang, khi A gửi "thông tin" cho B quan channel, A sẽ dừng lại, đợi (block) cho đến khi B xử lý xong mới tiếp tục. Cơ chế đợi đối phương thực hiện như thế này gọi là "synchronous" (có tính đồng bộ).</p>
+<h2 id="receive">Receive</h2>
+<p>Nếu trong mailbox có message, process gọi <code>receive do ...end</code> sẽ xử lý ngay message đó, nhưng nếu không có message nào, nó sẽ đợi (block) cho đến khi có message.
+Trừ khi được gọi với "after" để thực hiện "timeout" sau một khoản thời gian cố định. Ví dụ code sau sẽ đợi message trong 2s (2000 milli giây):</p>
+<pre><code class="elixir">iex(27)&gt; receive do
+...(27)&gt;   msg -&gt; msg
+...(27)&gt; after 2_000 -&gt; &quot;Nothing after 2s&quot;
+...(27)&gt; end
+&quot;Nothing after 2s&quot;
+</code></pre>
+
+<p><code>receive</code> có hỗ trợ pattern matching.</p>
+<h2 id="sinh-process-e-gui-message">Sinh process để gửi message</h2>
+<pre><code class="Elixir">iex(28)&gt; parent = self()
+#PID&lt;0.80.0&gt;
+iex(29)&gt; spawn fn -&gt; send(parent, {:hello, self()}) end
+#PID&lt;0.129.0&gt;
+iex(30)&gt; receive do
+...(30)&gt;   {:hello, pid} -&gt; &quot;Got hello from #{inspect pid}&quot;
+...(30)&gt; end
+&quot;Got hello from #PID&lt;0.129.0&gt;&quot;
+</code></pre>
+
+<p>function <code>flush/0</code> giúp "flush" và in tất cả các messages đang nằm trong mailbox.</p>
+<pre><code class="elixir">iex(34)&gt; send self(), 5
+5
+iex(35)&gt; send self(), 7
+7
+iex(36)&gt; send self(), 9
+9
+iex(37)&gt; flush()
+5
+7
+9
+:ok
+</code></pre>
+
+<h1 id="tasks">Tasks</h1>
+<p>Task là khái niệm xây dựng trên <code>spawn/1</code> để tạo process, nhưng cung cấp nhiều tính năng hơn. Cách dùng tương tự <code>spawn/1</code> nhưng trả về tuple {:ok, pid} thay vì PID như <code>spawn/1</code></p>
+<pre><code class="elixir">iex(32)&gt; Task.start fn -&gt; send(parent, {:hello, self()}) end
+{:ok, #PID&lt;0.136.0&gt;}
+iex(33)&gt; receive do
+...(33)&gt;   {:hello, pid} -&gt; &quot;Got hello from #{inspect pid}&quot;
+...(33)&gt; end
+&quot;Got hello from #PID&lt;0.136.0&gt;&quot;
+</code></pre>
+
+<h1 id="gui-message-qua-lai-giua-2-process">Gửi message qua lại giữa 2 process</h1>
+<p>Những ví dụ đơn giản trên chỉ gửi message từ một process đến process còn lại mà không hề có phản hồi,
+để process Y phản hồi sau khi nhận được message từ X, Y phải biết "địa chỉ" của X - ở đây là PID. Vì vậy khi gửi message, ta gửi kèm PID của process gửi (giống như gửi thư, muốn nhận phải ghi địa chỉ người nhận). Để quá trình này trông giống như 2 process cùng đang chạy và nói chuyện với nhau, ta sẽ viết function cho process nhận sẽ chạy mãi cho đến khi nhận được message có chứa atom :quit.</p>
+<p>Định nghĩa 1 module và viết vào 1 file có tên bất kỳ:</p>
+<pre><code class="elixir">defmodule CoolProcess do
+  def loop() do
+    receive do
+      {:msg, msg, pid} -&gt;
+        send(pid, {:msg, &quot;Got it:&quot; &lt;&gt; msg , self()})
+        loop()
+      {:quit, pid} -&gt;
+        send(pid, {&quot;Goodbye&quot;, self()})
+      {_, pid} -&gt;
+        send(pid, {&quot;I dont understand you&quot;, self()})
+        loop()
+      _ -&gt;
+        IO.puts &quot;What?&quot;
+        loop()
+    end
+  end
+
+  def start_link do
+    Task.start_link(fn -&gt; loop() end)
+  end
+end
+
+</code></pre>
+
+<p>Ở mỗi trường hợp (trừ {:quit, pid}), function loop() sẽ gọi lại chính nó, tạo nên một vòng lặp vô hạn, nhưng ta sẽ không bị lỗi gì liên quan đến giới hạn recursive bởi các câu gọi <code>loop()</code> đều là câu lệnh cuối cùng, Elixir biết cách xử lý những trường hợp như vậy - và nó có tên là "tail recursive".</p>
+<p>Giờ chạy <code>iex filename.exs</code> và gọi function của CoolProcess.start_link/0 để tạo một process mới,
+gửi các message đến nó và nhận phản hồi, gửi {:quit, PID} để tắt process (do khối code tương
+ứng khi nhận được :quit không gọi loop() nữa )</p>
+<pre><code class="elixir">iex(3)&gt; {:ok, pid} = CoolProcess.start_link
+{:ok, #PID&lt;0.90.0&gt;}
+iex(4)&gt; Pro
+Process     Protocol
+iex(4)&gt; Process.alive? pid
+true
+iex(5)&gt; send pid, {:msg, &quot;hello&quot;, self()}
+{:msg, &quot;hello&quot;, #PID&lt;0.84.0&gt;}
+iex(6)&gt; flush()
+{:msg, &quot;Got it:hello&quot;, #PID&lt;0.90.0&gt;}
+:ok
+iex(7)&gt; send pid, {:nothing, self()}
+{:nothing, #PID&lt;0.84.0&gt;}
+iex(8)&gt; flush()
+{&quot;I dont understand you&quot;, #PID&lt;0.90.0&gt;}
+:ok
+iex(9)&gt; send pid, {:quit, self()}
+{:quit, #PID&lt;0.84.0&gt;}
+iex(10)&gt; flush()
+{&quot;Goodbye&quot;, #PID&lt;0.90.0&gt;}
+:ok
+iex(11)&gt; Process.alive? pid
+false
+</code></pre>
+
+<p>Những khái niệm "process", send, receive không quá phức tạp là phần cốt yếu đểu giúp Erlang/Elixir tạo nên những hệ thống có thể chạy hàng trăm ngàn process cùng một lúc. Khi vấn đề là một, hai process, chúng ta quan tâm đến từng process, nhưng khi bài toán lớn lên, ta sẽ cần quan tâm đến việc làm sao quản lý được nhiều process, và điều khiển chúng chạy thế nào cho phù hợp. Phần #TODO sẽ đi chi tiết vào việc quản lý các process với sức mạnh của OTP.</p>
+<h2 id="tham-khao">Tham khảo</h2>
+<ul>
+<li>https://elixir-lang.org/getting-started/processes.html</li>
+<li>http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

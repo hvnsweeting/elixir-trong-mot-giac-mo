@@ -51,6 +51,12 @@
                     <li class="active">
                         <a href="./">After basic</a>
                     </li>
+                    <li >
+                        <a href="../http-client/">Http client</a>
+                    </li>
+                    <li >
+                        <a href="../process/">Process</a>
+                    </li>
                 </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -64,8 +70,8 @@
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li class="disabled">
-                        <a rel="prev" >
+                    <li >
+                        <a rel="prev" href="../http-client/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -90,6 +96,9 @@
             <li><a href="#protocol">Protocol</a></li>
         <li class="main "><a href="#protocol-consolidation">Protocol consolidation</a></li>
         <li class="main "><a href="#sigils">Sigils</a></li>
+            <li><a href="#typespec">Typespec</a></li>
+            <li><a href="#behaviours">Behaviours</a></li>
+        <li class="main "><a href="#function12520324582-in-erl_evalexpr5">Function&lt;12.52032458/2 in :erl_eval.expr/5&gt;</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -120,7 +129,7 @@ Ví dụ cho N=3, dãy số 2 3 4, cần in ra màn hình:</p>
 <h1 id="todo-tai-sao">TODO tại sao?</h1>
 <p>https://www.hackerrank.com/challenges/fp-filter-array</p>
 <h1 id="todo">TODO</h1>
-<p>why it still can compare string with number </p>
+<p>why it still can compare string with number</p>
 <p>why [head|tail] and there is a case head == "" ?
 because of how I split string</p>
 <p>data = IO.read(:stdio, :all) |&gt; String.trim |&gt; String.split([" ", "\n"])</p>
@@ -135,7 +144,7 @@ spawn/1 takes a function
 return a PID</p>
 <p>Process.alive?(pid)</p>
 <p>Retrieve the PID of the current process by calling self/0</p>
-<p>send message: 
+<p>send message:
 send/2: TO, MESSAGE</p>
 <p>when msg is sent to a process, the msg is stored in the process mailbox.</p>
 <p>receive/1 searching for 1 msg that match a given pattern in mailbox.</p>
@@ -154,13 +163,13 @@ send NAME, VALUE</p>
 <p>http://elixir-lang.org/getting-started/processes.html</p>
 <p>====
 Module</p>
-<p>alias Foo.Bar, as Bar 
+<p>alias Foo.Bar, as Bar
 like import FooBar as Bar  # Python</p>
 <p>require Foo # ensuring the module is compiled and available (usually for macro)</p>
-<p>import Foo # import functions from Foo module, so can call without <code>Foo.</code> - auto require it </p>
-<p>use Foo # chạy custom code trong Foo </p>
-<p>alias/require/import : directive vì có lexical scope 
-Vì là lexical scope nên có thể set alias trong function 
+<p>import Foo # import functions from Foo module, so can call without <code>Foo.</code> - auto require it</p>
+<p>use Foo # chạy custom code trong Foo</p>
+<p>alias/require/import : directive vì có lexical scope
+Vì là lexical scope nên có thể set alias trong function
 và chỉ có thể dùng trong function đó.</p>
 <p>Macro:
 code that generates code.
@@ -180,7 +189,7 @@ List</p>
  except: somethign</p>
 <p>An alias in Elixir is a capitalized identifier which is converted to an atom during compilation.</p>
 <h2 id="module-attributes">Module attributes</h2>
-<p>annotate the module 
+<p>annotate the module
 constant
 temporary module storage</p>
 <p>@moduledoc # doc for module
@@ -194,7 +203,7 @@ temporary module storage</p>
 <p>@doc """
   calculate ...
   """
-  def sum(a,b), do: a + b 
+  def sum(a,b), do: a + b
 end</p>
 <h1 id="constant">Constant</h1>
 <p>Exist only during compilation time</p>
@@ -258,7 +267,7 @@ Inspect protocol</p>
 <p>Sigil: start with the tilde (<code>~</code>), followed by a letter (which identify the sigil)</p>
 <p>Regular expression
 ~r/foo|bar/</p>
-<p>"foo" =~ regex # match regex </p>
+<p>"foo" =~ regex # match regex</p>
 <p>PRARE.</p>
 <p>"HELLO" =~ ~r/hello/i # i is modifier</p>
 <p>Sigils support 8 different delimiters.</p>
@@ -268,7 +277,198 @@ Inspect protocol</p>
 - String: ~s
 - Char list: ~c
 - Word list: ~w(foo bar bat)
-- ~S no escappe/interpolation</p></div>
+- ~S no escappe/interpolation</p>
+<h3 id="_1"></h3>
+<p>https://www.hackerrank.com/challenges/fp-array-of-n-elements
+inspect(list, limit: -1)
+dùng limit -1 để in ra không giới hạn ký tự, vd list có 100 phần tử, mặc định elixir chỉ in ra phần đầu rồi ...</p>
+<p>để không in ra chữ (charlist),
+dùng
+ inspect(charlists: :as_lists)</p>
+<p>iex(20)&gt; inspect (List.duplicate 1, 100), char_lists: :as_lists, limit: -1
+"[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]"</p>
+<h4 id="typespec">Typespec</h4>
+<p>Function spec</p>
+<p>:: means that the function on the left side returns a value whose type is what’s on the right side. Function specs are written with the @spec directive, placed right before the function definition. The round/1 function could be written as:</p>
+<p>@spec round(number) :: integer
+def round(number), do: # implementation..</p>
+<h4 id="behaviours">Behaviours</h4>
+<p>is a specification for composable module</p>
+<p>defmodule Parser do
+  @callback parse(String.t) :: any
+  @callback extensions() :: [String.t]
+end</p>
+<p>Adopting behaviours:</p>
+<pre><code>defmodule JSONParser do
+  @behaviour Parser
+
+  def parse(str), do: ...
+
+
+end
+
+
+
+## Erlang Library
+
+:io.format(&quot;Pi ~10.3f~n&quot;, [:math.pi])
+
+# :crypto
+- not standard,
+
+:crypto.hash(:sha256, &quot;Elixir&quot;)
+
+# :digraph
+Dealing with directed graphs
+
+# ETS - Erlang term storage
+Dets: disk ETS
+allow to create a table containing tuples.
+
+Function in ets module wil modify the state of the table as
+a side-effect.
+
+
+
+iex(8)&gt; :ets.insert(table, {&quot;HVN&quot;, 27})
+true
+iex(9)&gt; :ets.i(table)
+&lt;1   &gt; {&lt;&lt;&quot;HVN&quot;&gt;&gt;,27}
+EOT  (q)uit (p)Digits (k)ill /Regexp --&gt;1
+EOT  (q)uit (p)Digits (k)ill /Regexp --&gt;2
+EOT  (q)uit (p)Digits (k)ill /Regexp --&gt;q
+:ok
+
+
+## :math
+
+:math.sin
+:math.exp
+:math.log
+
+
+
+## :queue
+FIFO
+
+
+q = :queue.new
+q = :queue.in(&quot;A&quot;, q)
+
+{value, q} = :queue.out(q)
+
+
+## :rand
+
+:rand.uniform
+:rand.seed
+
+
+## :zip
+
+:zip.foldl(...)
+
+:zlib
+
+
+## Mix and OTP
+
+### Agent
+is simple wrapper around state.
+
+
+
+atoms are not garbage collected.
+
+### GenServer
+
+call: sync
+cast: async
+
+
+
+
+http://erlang.org/pipermail/erlang-questions/2014-November/081570.html#
+https://blog.codeship.com/concurrency-in-elixir/
+
+
+
+
+
+### Enum functions
+
+Enum.concat/1 : nối các enumerable trong 1 enumerable (e.g flatten a list)
+
+Enum.chunk/2 
+
+def chunk(enumerable, count)
+Shortcut to chunk(enumerable, count, count).
+
+Cắt enum thành `count` enum nhỏ hơn:
+
+iex(3)&gt; Enum.chunk([1,2,3,4,5,6], 3)
+[[1, 2, 3], [4, 5, 6]]
+iex(4)&gt; Enum.chunk([1,2,3,4,5,6], 2)
+[[1, 2], [3, 4], [5, 6]]
+
+
+iex(6)&gt; Enum.dedup([1,2,2,1,2,2,2,1,1,])
+[1, 2, 1, 2, 1]
+iex(7)&gt; Enum.uniq([1,2,2,1,2,2,2,1,1,])
+[1, 2]
+
+iex(8)&gt; Enum.empty?([])
+true
+
+iex(9)&gt; Enum.zip([1,2,3], [&quot;meo&quot;, &quot;cho&quot;, &quot;ga&quot;, &quot;trau&quot;])
+[{1, &quot;meo&quot;}, {2, &quot;cho&quot;}, {3, &quot;ga&quot;}]
+
+Trong Elixir, function không phải first-class citizen.
+Ta không thể pass 1 function có tên thành argument cho function khác.
+
+</code></pre>
+
+<p>iex(10)&gt; is_function(rem)
+** (CompileError) iex:10: undefined function rem/0</p>
+<p>iex(10)&gt; is_function(rem/2)
+** (CompileError) iex:10: undefined function rem/0
+    (stdlib) lists.erl:1354: :lists.mapfoldl/3</p>
+<pre><code>
+Function capturing cho phép &quot;capture&quot; một function có tên thành một anonymous function, và lúc đó ta có thể gán nó, gọi nó như argument:
+
+Có 2 cú pháp để capture function, một là dùng function/arity, cách khác là dùng capture để biểu diễn lượng argument mà function nhận vào:
+
+iex(12)&gt; fun = &amp;rem/2
+&amp;:erlang.rem/2
+iex(13)&gt; fun = &amp;rem(&amp;1, &amp;2)
+&amp;:erlang.rem/2
+iex(14)&gt; fun.(5,2)
+1
+
+Để gọi anonymous function, phải dùng dấu `.` giữa tên biến và dấu gọi function `()`.
+
+Hai anonymous function sau là tương đương 
+
+</code></pre>
+
+<p>iex(16)&gt; fun = &amp;(&amp;1 + &amp;2)
+&amp;:erlang.+/2
+iex(17)&gt; fun.(4, 9)
+13</p>
+<p>iex(18)&gt; fun = fn(x,y) -&gt; x + y end</p>
+<h1 id="function12520324582-in-erl_evalexpr5">Function&lt;12.52032458/2 in :erl_eval.expr/5&gt;</h1>
+<p>iex(19)&gt; fun.(4, 9)
+13</p>
+<pre><code>
+Pass function đó khi gọi Enum.map
+
+</code></pre>
+
+<p>iex(20)&gt; Enum.map([1,2,3], &amp;(&amp;1 * 2))
+[2, 4, 6]
+iex(21)&gt; Enum.map([1,2,3], fn x -&gt; x * 2 end)
+[2, 4, 6]
+```</p></div>
         </div>
 
         <footer class="col-md-12">
