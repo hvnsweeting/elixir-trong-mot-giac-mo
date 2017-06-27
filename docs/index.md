@@ -552,6 +552,20 @@ iex(48)> %{"name" => "PYMI", "country" => "VN"}
 %{"country" => "VN", "name" => "PYMI"}
 ```
 
+- Tạo map từ list của các tuple-2:
+
+```
+iex(59)> [{1, 7}, {2, 3}] |> Map.new
+%{1 => 7, 2 => 3}
+```
+
+- Tạo list từ map:
+
+```
+iex(60)> [{1, 7}, {2, 3}] |> Map.new |> Map.to_list
+[{1, 7}, {2, 3}]
+```
+
 - Đếm số phần tử
 - Truy cập value:
 
