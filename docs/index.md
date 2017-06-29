@@ -1228,6 +1228,30 @@ Hello standard error
 Để không thêm ký tự newline (`\n`) sau mỗi dòng, sử dụng `IO.write` thay
 vì `IO.puts`.
 
+`puts` chỉ nhận argument là string, muốn "in ra" một list, tuple hay object bất
+kỳ, hãy dùng `IO.inspect`.
+
+Khi dùng `IO.inspect` in ra list có nhiều phần tử (>50), Elixir sẽ chỉ in ra 50
+phần tử đầu và ghi ... để ký hiệu còn tiếp. Muốn hiện đầy đủ, có thể gọi thêm
+argument:
+
+```
+iex(9)> IO.inspect(1..100|>Enum.map(fn x -> x*2 end))
+
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38,
+ 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74,
+ 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, ...]
+
+iex(10)> IO.inspect(1..100|>Enum.map(fn x -> x*2 end), limit: :infinity)
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+ 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82,
+ 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116,
+ 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148,
+ 150, 152, 154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180,
+ 182, 184, 186, 188, 190, 192, 194, 196, 198, 200]
+
+```
+
 ### Đọc ghi file
 
 Module `File` chứa các function để tương tác với file, từ đọc, ghi, xoá, copy...
