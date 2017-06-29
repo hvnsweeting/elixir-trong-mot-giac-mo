@@ -238,6 +238,13 @@ Reference modules
 ## Các thao tác cơ bản với các kiểu dữ liệu
 
 ### Thao tác với String
+
+- Tạo string từ kiểu dữ liệu khác:
+```
+iex(2)> Integer.to_string(42) <> List.to_string(["a", "b"])
+"42ab"
+```
+
 - Kiểm tra string con:
 
 ```
@@ -394,6 +401,22 @@ Reference modules
   List
 ```
 
+Từ các kiểu dữ liệu khác:
+
+String thành charlist:
+
+```
+iex(5)> String.to_charlist "Elixir"
+'Elixir'
+
+```
+
+String thành list
+```
+iex(7)> String.graphemes("Việt Nam")
+["V", "i", "ệ", "t", " ", "N", "a", "m"]
+```
+
 - Lấy đầu (head)
 
 ```
@@ -516,6 +539,9 @@ slice(enumerable, start, amount)
 iex(36)>  Enum.slice(["Python", "PyMi", "Elixir", "FAMILUG.org"], 1, 10)
 ["PyMi", "Elixir", "FAMILUG.org"]
 ```
+
+**Chú ý** argument thứ 3 là só phần tử sẽ slice,
+không phải index kết thúc như trong Python.
 
 - Sắp xếp 1 list
 
