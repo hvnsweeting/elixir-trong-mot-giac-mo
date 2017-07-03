@@ -239,6 +239,25 @@ Reference modules
 
 ### Thao tác với String
 
+Chú ý: Để tương thích với Unicode, các function trong String hầu hết có độ phức tạp
+là O(n), khá chậm. Thậm chí nếu bạn cần lấy ký tự ở vị trí thứ N, Elixir cũng phải
+đi lần lượt từng ký tự cho đến ký tự thứ N.
+Nếu không cần xử lý string Unicode, có thể dùng các binary function để có tốc độ O(1).
+(Xem chi tiết trong tài liệu của String module).
+
+```
+iex(30)> String.length("abcdef")
+6
+iex(31)> byte_size("abcdef")
+6
+iex(32)> String.at("abcdef", 5)
+"f"
+iex(33)> :binary.at("abcdef", 5)
+102
+iex(34)> binary_part("abcdef", 5, 1)
+"f"
+```
+
 - Tạo string từ kiểu dữ liệu khác:
 ```
 iex(2)> Integer.to_string(42) <> List.to_string(["a", "b"])
