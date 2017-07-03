@@ -749,7 +749,14 @@ iex(72)&gt; put_in users[:hvn].age, 29
  hails: %{age: 26, language: [&quot;Golang&quot;, &quot;JS&quot;], name: &quot;HaiLS&quot;}]
 </code></pre>
 
-<p>Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module <code>Enum</code> dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như <code>List</code>, <code>String</code>.</p>
+<ul>
+<li>Biến map này thành map khác, sử dụng <code>Enum.into/3</code>:</li>
+</ul>
+<pre><code>iex(2)&gt;  %{a: [1, 2, 3], b: [&quot;meo&quot;, &quot;ga&quot;]} |&gt; Enum.into(%{}, fn {k, v} -&gt; {k, length(v)} end)
+%{a: 3, b: 2}
+</code></pre>
+
+<p>Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module <code>Enum</code> dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như <code>List</code></p>
 <h2 id="pattern-matching">Pattern matching</h2>
 <p><code>=</code> : the match operator
 - Khi gán biến, biến phải nằm bên trái dấu <code>=</code></p>
@@ -1366,5 +1373,5 @@ Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình 
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-07-03 05:13:52
+Build Date UTC : 2017-07-03 05:32:52
 -->
