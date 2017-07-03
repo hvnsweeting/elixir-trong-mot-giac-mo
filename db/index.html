@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Db - Lá ngón</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Lá ngón</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                    <li >
+                        <a href="../after-basic/">After basic</a>
+                    </li>
+                    <li class="active">
+                        <a href="./">Db</a>
+                    </li>
+                    <li >
+                        <a href="../http-client/">Http client</a>
+                    </li>
+                    <li >
+                        <a href="../phoenix/">Phoenix</a>
+                    </li>
+                    <li >
+                        <a href="../process/">Process</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../after-basic/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../http-client/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#database">Database</a></li>
+            <li><a href="#mnesia">Mnesia</a></li>
+            <li><a href="#cau-truc-cua-database">Cấu trúc của database</a></li>
+            <li><a href="#inh-nghia-1-database">Định nghĩa 1 database</a></li>
+            <li><a href="#tao-1-database">Tạo 1 database</a></li>
+            <li><a href="#ghi-vao-database">Ghi vào database</a></li>
+            <li><a href="#oc-tu-database">Đọc từ database</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="database">Database</h1>
+<p>Như mọi ngôn ngữ lập trình, Elixir có thể sử dụng tất cả các database ngoài kia
+từ PostgreSQL, MySQL đến NoSQL như MongoDB, ElasticSearch...</p>
+<p>Nếu như Python có sẵn thư viện đi kèm cho SQLite3, thì Elixir không có gì.
+Số thư viện built-in rất hạn chế của Elixir
+https://hexdocs.pm/elixir/Kernel.html
+dễ khiến ta lầm tưởng đây là ngôn ngữ mới, còn yếu chưa có gì...
+Nhưng hãy nhớ rằng, Elixir được xây dựng trên Erlang, chạy trên nền máy ảo
+BEAM, hệ thống đã có đầy đủ ecosystem hàng vài chục năm nay. Vậy nên mỗi khi
+tìm kiếm gì, hãy nhớ dùng từ khoá Erlang thay vì chỉ tìm mỗi Elixir.
+Erlang có database đi kèm ngôn ngữ: Mnesia /mˈniːzɪə/.
+Một database đủ tốt để WhatsApp sử dụng cho <a href="https://www.youtube.com/watch?v=c12cYAUTXXs">hệ thống chat phục vụ hàng tỷ
+user</a>. Tuy nhiên, nó có thể không
+đủ tốt cho bạn, nhưng là một lựa chọn tốt để bắt đầu.</p>
+<p>Tài liệu <a href="https://github.com/h4cc/awesome-elixir">Mnesia</a>
+cho Elixir không phải tìm cái là thấy ngay, ta search trong list
+Awesome Elixir từ khoá "Mnesia" sẽ thấy <a href="https://github.com/meh/amnesia">amnesia</a>.
+Tài liệu dẫn ta quay lại doc của <a href="http://erlang.org/doc/apps/mnesia/Mnesia_overview.html">Mnesia cho
+Erlang</a>,
+vì bản chất <code>amnesia</code> chỉ là một lớp code bọc (wrapper) để chuyển giữa Erlang
+và Elixir mà thôi.</p>
+<h2 id="mnesia">Mnesia</h2>
+<p>Mnesia là một DBMS (Database Management Systems) - như MySQL, PostgreSQL, ...,
+được viết riêng cho Erlang,
+trên nền tảng Erlang, nhằm giải quyết vấn đề mà các DBMS khác mắc phải, đặc
+biệt liên quan đến các hệ thống phân tán. Do Erlang/OTP hỗ trợ việc viết
+các ứng dụng phân tán, nhu cầu đòi hỏi phải có 1 hệ thống DBMS cũng phân tán
+được như nó, rõ ràng không có cách nào tốt hơn là xây dựng trên chính Erlang.
+Hơn nữa, Mnesia được xây dựng riêng cho Erlang, nó dùng Erlang làm ngôn ngữ
+để truy cập dữ liệu luôn, thay vì SQL. Điều này xoá đi vấn đề thông thường
+khi làm việc với database: chuyển đổi kiểu dữ liệu giữa ngôn ngữ lập trình và
+database (WHAO!).</p>
+<h2 id="cau-truc-cua-database">Cấu trúc của database</h2>
+<p>Một database là một tập hợp gồm các table (bảng), nó được lưu trên
+máy tính trong một thư mục (folder/directory) được chỉ định.</p>
+<h3 id="database-schema-skim">Database schema /ˈskiːmə/</h3>
+<p>http://erlang.org/doc/apps/mnesia/Mnesia_chap3.html#def_schema</p>
+<p>Thông tin về tên các table, mỗi table được lưu trữ thế nào, ở đâu...</p>
+<h3 id="data-model">Data model</h3>
+<p>Mỗi table thường đại diện cho một đối tượng (Nhân viên, học viên, hoá đơn...), nó bao gồm nhiều thuộc tính xếp thành các cột.</p>
+<p>Mỗi "dữ liệu" sẽ được biểu diễn như 1 dòng của bảng. Trong Erlang/Elixir gọi là một record. Các record được biểu diễn thành kiểu dữ liệu tuple trong
+Erlang/Elixir.</p>
+<h4 id="oid-object-identifier">OID (Object Identifier)</h4>
+<p>Cặp giá trị (tuple-2) {Tablename, Key} dùng để xác định một record, được gọi là OID.</p>
+<p>Ví dụ: một record của table student, khi biểu diễn bằng tuple ở dạng:</p>
+<p>{}.. TODO là OID của record.</p>
+<h3 id="relation">Relation</h3>
+<p>Các DBMS thường thuộc loại RDBMS, R - relation.
+Dữ liệu được lưu trữ trong MySQL, PostgreSQL là loại dữ liệu có quan hệ
+với nhau. Một học viên có quan hệ với lớp mà học viên đó học (khoá học)...
+một nhân viên có quan hệ với  phòng ban mà họ làm việc.</p>
+<p>Mnesia tự nhận nó là <a href="http://erlang.org/doc/apps/mnesia/Mnesia_chap3.html#id66740">"extended relational"</a>, khi nó có khả năng lưu trữ bất kỳ
+giá trị nào mà Erlang biểu diễn.</p>
+<h2 id="inh-nghia-1-database">Định nghĩa 1 database</h2>
+<h2 id="tao-1-database">Tạo 1 database</h2>
+<h2 id="ghi-vao-database">Ghi vào database</h2>
+<h2 id="oc-tu-database">Đọc từ database</h2>
+<p>https://www.amberbit.com/elixir-cocktails/elixir/using-mnesia-database-from-elisir/</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

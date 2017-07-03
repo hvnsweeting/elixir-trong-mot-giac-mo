@@ -52,7 +52,13 @@
                         <a href="after-basic/">After basic</a>
                     </li>
                     <li >
+                        <a href="db/">Db</a>
+                    </li>
+                    <li >
                         <a href="http-client/">Http client</a>
+                    </li>
+                    <li >
+                        <a href="phoenix/">Phoenix</a>
                     </li>
                     <li >
                         <a href="process/">Process</a>
@@ -300,6 +306,30 @@ Reference modules
 
 <h2 id="cac-thao-tac-co-ban-voi-cac-kieu-du-lieu">Các thao tác cơ bản với các kiểu dữ liệu</h2>
 <h3 id="thao-tac-voi-string">Thao tác với String</h3>
+<p>Chú ý: Để tương thích với Unicode, các function trong String hầu hết có độ phức tạp
+là O(n), khá chậm. Thậm chí nếu bạn cần lấy ký tự ở vị trí thứ N, Elixir cũng phải
+đi lần lượt từng ký tự cho đến ký tự thứ N.
+Nếu không cần xử lý string Unicode, có thể dùng các binary function để có tốc độ O(1).
+(Xem chi tiết trong tài liệu của String module).</p>
+<pre><code>iex(30)&gt; String.length(&quot;abcdef&quot;)
+6
+iex(31)&gt; byte_size(&quot;abcdef&quot;)
+6
+iex(32)&gt; String.at(&quot;abcdef&quot;, 5)
+&quot;f&quot;
+iex(33)&gt; :binary.at(&quot;abcdef&quot;, 5)
+102
+iex(34)&gt; binary_part(&quot;abcdef&quot;, 5, 1)
+&quot;f&quot;
+</code></pre>
+
+<ul>
+<li>Tạo string từ kiểu dữ liệu khác:</li>
+</ul>
+<pre><code>iex(2)&gt; Integer.to_string(42) &lt;&gt; List.to_string([&quot;a&quot;, &quot;b&quot;])
+&quot;42ab&quot;
+</code></pre>
+
 <ul>
 <li>Kiểm tra string con:</li>
 </ul>
@@ -449,6 +479,18 @@ Reference modules
   List
 </code></pre>
 
+<p>Từ các kiểu dữ liệu khác:</p>
+<p>String thành charlist:</p>
+<pre><code>iex(5)&gt; String.to_charlist &quot;Elixir&quot;
+'Elixir'
+
+</code></pre>
+
+<p>String thành list</p>
+<pre><code>iex(7)&gt; String.graphemes(&quot;Việt Nam&quot;)
+[&quot;V&quot;, &quot;i&quot;, &quot;ệ&quot;, &quot;t&quot;, &quot; &quot;, &quot;N&quot;, &quot;a&quot;, &quot;m&quot;]
+</code></pre>
+
 <ul>
 <li>Lấy đầu (head)</li>
 </ul>
@@ -569,6 +611,8 @@ slice(enumerable, start, amount)</li>
 [&quot;PyMi&quot;, &quot;Elixir&quot;, &quot;FAMILUG.org&quot;]
 </code></pre>
 
+<p><strong>Chú ý</strong> argument thứ 3 là só phần tử sẽ slice,
+không phải index kết thúc như trong Python.</p>
 <ul>
 <li>Sắp xếp 1 list</li>
 </ul>
@@ -597,6 +641,20 @@ Tên khác (trong ngôn ngữ khác): dictionary, associative array</p>
 %{a: 1, b: 2}
 iex(48)&gt; %{&quot;name&quot; =&gt; &quot;PYMI&quot;, &quot;country&quot; =&gt; &quot;VN&quot;}
 %{&quot;country&quot; =&gt; &quot;VN&quot;, &quot;name&quot; =&gt; &quot;PYMI&quot;}
+</code></pre>
+
+<ul>
+<li>Tạo map từ list của các tuple-2:</li>
+</ul>
+<pre><code>iex(59)&gt; [{1, 7}, {2, 3}] |&gt; Map.new
+%{1 =&gt; 7, 2 =&gt; 3}
+</code></pre>
+
+<ul>
+<li>Tạo list từ map:</li>
+</ul>
+<pre><code>iex(60)&gt; [{1, 7}, {2, 3}] |&gt; Map.new |&gt; Map.to_list
+[{1, 7}, {2, 3}]
 </code></pre>
 
 <ul>
@@ -1124,6 +1182,27 @@ Hello standard error
 
 <p>Để không thêm ký tự newline (<code>\n</code>) sau mỗi dòng, sử dụng <code>IO.write</code> thay
 vì <code>IO.puts</code>.</p>
+<p><code>puts</code> chỉ nhận argument là string, muốn "in ra" một list, tuple hay object bất
+kỳ, hãy dùng <code>IO.inspect</code>.</p>
+<p>Khi dùng <code>IO.inspect</code> in ra list có nhiều phần tử (&gt;50), Elixir sẽ chỉ in ra 50
+phần tử đầu và ghi ... để ký hiệu còn tiếp. Muốn hiện đầy đủ, có thể gọi thêm
+argument:</p>
+<pre><code>iex(9)&gt; IO.inspect(1..100|&gt;Enum.map(fn x -&gt; x*2 end))
+
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38,
+ 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74,
+ 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, ...]
+
+iex(10)&gt; IO.inspect(1..100|&gt;Enum.map(fn x -&gt; x*2 end), limit: :infinity)
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+ 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82,
+ 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116,
+ 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148,
+ 150, 152, 154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180,
+ 182, 184, 186, 188, 190, 192, 194, 196, 198, 200]
+
+</code></pre>
+
 <h3 id="oc-ghi-file">Đọc ghi file</h3>
 <p>Module <code>File</code> chứa các function để tương tác với file, từ đọc, ghi, xoá, copy...</p>
 <pre><code>iex(53)&gt; IO.puts(:stderr, &quot;Hello standard error&quot;)
@@ -1287,5 +1366,5 @@ Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình 
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-06-15 04:47:33
+Build Date UTC : 2017-07-03 05:13:52
 -->
