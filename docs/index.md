@@ -703,7 +703,14 @@ iex(72)> put_in users[:hvn].age, 29
  hails: %{age: 26, language: ["Golang", "JS"], name: "HaiLS"}]
 ```
 
-Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module `Enum` dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như `List`, `String`.
+- Biến map này thành map khác, sử dụng `Enum.into/3`:
+
+```
+iex(2)>  %{a: [1, 2, 3], b: ["meo", "ga"]} |> Enum.into(%{}, fn {k, v} -> {k, length(v)} end)
+%{a: 3, b: 2}
+```
+
+Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module `Enum` dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như `List`
 ## Pattern matching
 
 `=` : the match operator
