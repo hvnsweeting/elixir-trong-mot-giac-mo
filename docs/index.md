@@ -237,6 +237,42 @@ Reference modules
 
 ## Các thao tác cơ bản với các kiểu dữ liệu
 
+### Thao tác với số
+
+- Tính bình phương, căn, sin, cos... sử dụng module `:math` của Erlang
+```
+iex(11)> :math.pow(2,4)
+16.0
+iex(12)> :math.sin(2 * :math.pi)
+-2.4492935982947064e-16
+iex(17)> :math.sqrt(4)
+2.0
+```
+
+- Convert float thành integer (bỏ phần thập phân)
+```
+iex(24)> trunc 5.7
+5
+iex(25)> trunc 5.1
+5
+```
+
+- Convert string thành integer:
+```
+iex(26)> "5" |> String.to_integer
+5
+```
+
+- Làm tròn float thành integer gần nhất
+```
+iex(28)> round 6.5
+7
+iex(29)> round 7.5
+8
+iex(30)> round 7.1
+7
+```
+
 ### Thao tác với String
 
 Chú ý: Để tương thích với Unicode, các function trong String hầu hết có độ phức tạp
