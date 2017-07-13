@@ -49,16 +49,10 @@
                         <a href=".">Home</a>
                     </li>
                     <li >
-                        <a href="after-basic/">After basic</a>
-                    </li>
-                    <li >
                         <a href="db/">Db</a>
                     </li>
                     <li >
                         <a href="http-client/">Http client</a>
-                    </li>
-                    <li >
-                        <a href="phoenix/">Phoenix</a>
                     </li>
                     <li >
                         <a href="process/">Process</a>
@@ -77,7 +71,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="after-basic/">
+                        <a rel="prev" href="db/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -305,6 +299,45 @@ Reference modules
 </code></pre>
 
 <h2 id="cac-thao-tac-co-ban-voi-cac-kieu-du-lieu">Các thao tác cơ bản với các kiểu dữ liệu</h2>
+<h3 id="thao-tac-voi-so">Thao tác với số</h3>
+<ul>
+<li>Tính bình phương, căn, sin, cos... sử dụng module <code>:math</code> của Erlang</li>
+</ul>
+<pre><code>iex(11)&gt; :math.pow(2,4)
+16.0
+iex(12)&gt; :math.sin(2 * :math.pi)
+-2.4492935982947064e-16
+iex(17)&gt; :math.sqrt(4)
+2.0
+</code></pre>
+
+<ul>
+<li>Convert float thành integer (bỏ phần thập phân)</li>
+</ul>
+<pre><code>iex(24)&gt; trunc 5.7
+5
+iex(25)&gt; trunc 5.1
+5
+</code></pre>
+
+<ul>
+<li>Convert string thành integer:</li>
+</ul>
+<pre><code>iex(26)&gt; &quot;5&quot; |&gt; String.to_integer
+5
+</code></pre>
+
+<ul>
+<li>Làm tròn float thành integer gần nhất</li>
+</ul>
+<pre><code>iex(28)&gt; round 6.5
+7
+iex(29)&gt; round 7.5
+8
+iex(30)&gt; round 7.1
+7
+</code></pre>
+
 <h3 id="thao-tac-voi-string">Thao tác với String</h3>
 <p>Chú ý: Để tương thích với Unicode, các function trong String hầu hết có độ phức tạp
 là O(n), khá chậm. Thậm chí nếu bạn cần lấy ký tự ở vị trí thứ N, Elixir cũng phải
@@ -1373,5 +1406,5 @@ Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình 
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-07-03 05:32:52
+Build Date UTC : 2017-07-13 07:25:57
 -->
