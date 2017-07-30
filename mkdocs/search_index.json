@@ -399,6 +399,16 @@
             "location": "/process/#tham-khao",
             "text": "https://elixir-lang.org/getting-started/processes.html  http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency",
             "title": "Tham kh\u1ea3o"
+        },
+        {
+            "location": "/why-elixir/",
+            "text": "Collection of posts on why Elixir/Erlang\n\n\nWhen something is right for Erlang, that means the same for Elixir.\n\n\n\n\n5 mils users\n\n\nWhy a tech veteran code in Erlang",
+            "title": "Why elixir"
+        },
+        {
+            "location": "/why-elixir/#collection-of-posts-on-why-elixirerlang",
+            "text": "When something is right for Erlang, that means the same for Elixir.   5 mils users  Why a tech veteran code in Erlang",
+            "title": "Collection of posts on why Elixir/Erlang"
         }
     ]
 }
