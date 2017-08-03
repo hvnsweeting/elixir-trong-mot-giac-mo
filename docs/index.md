@@ -245,6 +245,30 @@ Reference modules
   Map
 ```
 
+### mapset - kiểu dữ liệu tập hợp
+- Chứa mỗi phần tử 1 lần, không có thứ tự [trừ 32 phần tử đầu](http://stackoverflow.com/a/40408469) (tức không thể sắp xếp, phải đổi thành kiểu list mới sắp xếp được.)
+- Tạo set mới
+```
+iex(10)> MapSet.new
+#MapSet<[]>
+iex(11)> MapSet.new([1, 3, 43, 98])
+#MapSet<[1, 3, 43, 98]>
+iex(14)> MapSet.size(MapSet.new([1,3,3]))
+2
+```
+- Kiểm tra phần tử
+```
+iex(12)> MapSet.member?(MapSet.new([1, 3, 43, 98]) , 9)
+false
+```
+
+- Các phép toán tập hợp (giao - intersection, hợp - union,...)
+```
+iex(16)> MapSet.intersection(MapSet.new([1,3,5]), MapSet.new([1,5,2]))
+#MapSet<[1, 5]>
+#MapSet<[1, 2, 3, 5]>
+```
+
 ## Các thao tác cơ bản với các kiểu dữ liệu
 
 ### Thao tác với số
