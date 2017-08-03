@@ -173,6 +173,16 @@ iex(38)> [{:name, "PyMi"}, {:est, 2015}]
 [name: "PyMi", est: 2015]
 iex(39)> [name: "PyMi", est: 2015]
 [name: "PyMi", est: 2015]
+
+```
+
+Có thể truy cập phần tử của keyword list bằng key, khi nhiều key trùng nhau,
+truy cập sẽ trả về giá trị đầu tiên ứng với key.
+```
+iex(16)> [foo: "pika", foo: "pikachu"]
+[foo: "pika", foo: "pikachu"]
+iex(17)> [foo: "pika", foo: "pikachu"][:foo]
+"pika"
 ```
 
 ### Tuple
@@ -496,6 +506,22 @@ iex(25)> head
 iex(26)> tail
 ["PyMi", "Golang", "FAMILUG.org"]
 ```
+- Lấy phần tử đầu tiên, cuối cùng
+```
+iex(9)> List.first ["Python", "Golang", "Elixir"]
+"Python"
+iex(10)> List.last ["Python", "Golang", "Elixir"]
+"Elixir"
+```
+- Gói dữ liệu vào một list (nếu nó chưa phải 1 list)
+```
+iex(13)> List.wrap("Lac troi")
+["Lac troi"]
+iex(14)> List.wrap(0)
+[0]
+iex(15)> List.wrap(nil)
+[]
+```
 
 - Kiểm tra số phần tử
 ```
@@ -586,6 +612,11 @@ iex(31)> List.delete(["Python", "PyMi", "Golang", "FAMILUG.org", "t"], "Golang")
 iex(32)> List.delete_at(["Python", "PyMi", "Golang", "FAMILUG.org", "t"], 2)
 ["Python", "PyMi", "FAMILUG.org", "t"]
 ```
+- Làm phẳng 1 list (chứa các list khác)
+```
+iex(11)> List.flatten ["Python", ["Erlang", "Elixir"]]
+["Python", "Erlang", "Elixir"]
+```
 
 - Lấy một list con từ list (slice):
 slice(enumerable, start, amount)
@@ -613,6 +644,44 @@ iex(35)> Enum.sort_by(["Python", "PyMi", "Elixir", "FAMILUG.org", "t"], &String.
 ```
 
 https://hexdocs.pm/elixir/Enum.html#content
+
+### Tuple
+Luôn chú ý rằng trong Elixir, mọi kiểu dữ liệu đều là immutable, nên mọi
+function thay đổi dữ liệu đều trả về một giá trị mới, không thay đổi đầu vào đã
+gọi với function.
+
+Thay một phần tử tại index
+```
+iex(2)> put_elem {:foo, "bar"}, 1, "bye"
+{:foo, "bye"}
+```
+
+Thêm một giá trị vào index
+```
+iex(4)> Tuple.insert_at {"toi", "em"}, 1, "thang ay"
+{"toi", "thang ay", "em"}
+
+```
+
+Thêm vào cuối tuple:
+
+```
+iex(5)> Tuple.append {6, 9}, "Tail"
+{6, 9, "Tail"}
+```
+
+Xóa tại index
+
+```
+iex(6)> Tuple.delete_at {"Elixir", "is", :not, "great"}, 2
+{"Elixir", "is", "great"}
+```
+
+Biến thành list
+```
+iex(7)> Tuple.to_list {:x, :y, :z}
+[:x, :y, :z]
+```
 
 ### Map
 
@@ -669,9 +738,17 @@ Hay
 ```
 iex(60)> Map.get(map, :b)
 2
+iex(64)> Map.get(%{first_name: "Jon", last_name: "Snow"}, :age)
+nil
 ```
 
-Truy cập 1 key không tồn tại sẽ trả về nil.
+Hoặc
+```
+iex(2)> Map.fetch(%{first_name: "Jon", last_name: "Snow"}, :last_name)
+{:ok, "Snow"}
+iex(3)> Map.fetch(%{first_name: "Jon", last_name: "Snow"}, :age)
+:error
+```
 
 - Kiểm tra key có trong map không
 
@@ -702,6 +779,11 @@ iex(2)> Map.delete(%{:name => "HVN", :age => 27}, :language)
 
 - Duyệt qua từng key # TODO
 
+- Gộp (merge) 2 map
+```
+iex(6)> Map.merge(%{first_name: "Jon", last_name: "Snow"}, %{last_name: "Water", age: 27})
+%{age: 27, first_name: "Jon", last_name: "Water"}
+```
 - Biến thành list các tuple key-value:
 
 ```
@@ -747,6 +829,7 @@ iex(2)>  %{a: [1, 2, 3], b: ["meo", "ga"]} |> Enum.into(%{}, fn {k, v} -> {k, le
 ```
 
 Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module `Enum` dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như `List`
+
 ## Pattern matching
 
 `=` : the match operator
