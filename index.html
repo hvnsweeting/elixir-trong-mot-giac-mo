@@ -249,6 +249,15 @@ iex(38)&gt; [{:name, &quot;PyMi&quot;}, {:est, 2015}]
 [name: &quot;PyMi&quot;, est: 2015]
 iex(39)&gt; [name: &quot;PyMi&quot;, est: 2015]
 [name: &quot;PyMi&quot;, est: 2015]
+
+</code></pre>
+
+<p>Có thể truy cập phần tử của keyword list bằng key, khi nhiều key trùng nhau,
+truy cập sẽ trả về giá trị đầu tiên ứng với key.</p>
+<pre><code>iex(16)&gt; [foo: &quot;pika&quot;, foo: &quot;pikachu&quot;]
+[foo: &quot;pika&quot;, foo: &quot;pikachu&quot;]
+iex(17)&gt; [foo: &quot;pika&quot;, foo: &quot;pikachu&quot;][:foo]
+&quot;pika&quot;
 </code></pre>
 
 <h3 id="tuple">Tuple</h3>
@@ -553,6 +562,26 @@ iex(26)&gt; tail
 </code></pre>
 
 <ul>
+<li>Lấy phần tử đầu tiên, cuối cùng</li>
+</ul>
+<pre><code>iex(9)&gt; List.first [&quot;Python&quot;, &quot;Golang&quot;, &quot;Elixir&quot;]
+&quot;Python&quot;
+iex(10)&gt; List.last [&quot;Python&quot;, &quot;Golang&quot;, &quot;Elixir&quot;]
+&quot;Elixir&quot;
+</code></pre>
+
+<ul>
+<li>Gói dữ liệu vào một list (nếu nó chưa phải 1 list)</li>
+</ul>
+<pre><code>iex(13)&gt; List.wrap(&quot;Lac troi&quot;)
+[&quot;Lac troi&quot;]
+iex(14)&gt; List.wrap(0)
+[0]
+iex(15)&gt; List.wrap(nil)
+[]
+</code></pre>
+
+<ul>
 <li>Kiểm tra số phần tử</li>
 </ul>
 <pre><code>iex(14)&gt; length li
@@ -640,6 +669,13 @@ iex(32)&gt; List.delete_at([&quot;Python&quot;, &quot;PyMi&quot;, &quot;Golang&q
 </code></pre>
 
 <ul>
+<li>Làm phẳng 1 list (chứa các list khác)</li>
+</ul>
+<pre><code>iex(11)&gt; List.flatten [&quot;Python&quot;, [&quot;Erlang&quot;, &quot;Elixir&quot;]]
+[&quot;Python&quot;, &quot;Erlang&quot;, &quot;Elixir&quot;]
+</code></pre>
+
+<ul>
 <li>Lấy một list con từ list (slice):
 slice(enumerable, start, amount)</li>
 </ul>
@@ -663,6 +699,36 @@ không phải index kết thúc như trong Python.</p>
 </code></pre>
 
 <p>https://hexdocs.pm/elixir/Enum.html#content</p>
+<h3 id="tuple_1">Tuple</h3>
+<p>Luôn chú ý rằng trong Elixir, mọi kiểu dữ liệu đều là immutable, nên mọi
+function thay đổi dữ liệu đều trả về một giá trị mới, không thay đổi đầu vào đã
+gọi với function.</p>
+<p>Thay một phần tử tại index</p>
+<pre><code>iex(2)&gt; put_elem {:foo, &quot;bar&quot;}, 1, &quot;bye&quot;
+{:foo, &quot;bye&quot;}
+</code></pre>
+
+<p>Thêm một giá trị vào index</p>
+<pre><code>iex(4)&gt; Tuple.insert_at {&quot;toi&quot;, &quot;em&quot;}, 1, &quot;thang ay&quot;
+{&quot;toi&quot;, &quot;thang ay&quot;, &quot;em&quot;}
+
+</code></pre>
+
+<p>Thêm vào cuối tuple:</p>
+<pre><code>iex(5)&gt; Tuple.append {6, 9}, &quot;Tail&quot;
+{6, 9, &quot;Tail&quot;}
+</code></pre>
+
+<p>Xóa tại index</p>
+<pre><code>iex(6)&gt; Tuple.delete_at {&quot;Elixir&quot;, &quot;is&quot;, :not, &quot;great&quot;}, 2
+{&quot;Elixir&quot;, &quot;is&quot;, &quot;great&quot;}
+</code></pre>
+
+<p>Biến thành list</p>
+<pre><code>iex(7)&gt; Tuple.to_list {:x, :y, :z}
+[:x, :y, :z]
+</code></pre>
+
 <h3 id="map">Map</h3>
 <p>là một cấu trúc dữ liệu có thể gọi là "key-value" store.
 Tên khác (trong ngôn ngữ khác): dictionary, associative array</p>
@@ -713,9 +779,17 @@ nil
 <p>Hay</p>
 <pre><code>iex(60)&gt; Map.get(map, :b)
 2
+iex(64)&gt; Map.get(%{first_name: &quot;Jon&quot;, last_name: &quot;Snow&quot;}, :age)
+nil
 </code></pre>
 
-<p>Truy cập 1 key không tồn tại sẽ trả về nil.</p>
+<p>Hoặc</p>
+<pre><code>iex(2)&gt; Map.fetch(%{first_name: &quot;Jon&quot;, last_name: &quot;Snow&quot;}, :last_name)
+{:ok, &quot;Snow&quot;}
+iex(3)&gt; Map.fetch(%{first_name: &quot;Jon&quot;, last_name: &quot;Snow&quot;}, :age)
+:error
+</code></pre>
+
 <ul>
 <li>Kiểm tra key có trong map không</li>
 </ul>
@@ -747,8 +821,15 @@ false
 <p>Duyệt qua từng key # TODO</p>
 </li>
 <li>
-<p>Biến thành list các tuple key-value:</p>
+<p>Gộp (merge) 2 map</p>
 </li>
+</ul>
+<pre><code>iex(6)&gt; Map.merge(%{first_name: &quot;Jon&quot;, last_name: &quot;Snow&quot;}, %{last_name: &quot;Water&quot;, age: 27})
+%{age: 27, first_name: &quot;Jon&quot;, last_name: &quot;Water&quot;}
+</code></pre>
+
+<ul>
+<li>Biến thành list các tuple key-value:</li>
 </ul>
 <pre><code>iex(63)&gt; Map.to_list(%{:name =&gt; &quot;HVN&quot;, :age =&gt; 27})
 [age: 27, name: &quot;HVN&quot;]
@@ -1409,5 +1490,5 @@ Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình 
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-07-30 07:07:25
+Build Date UTC : 2017-08-03 09:05:14
 -->
