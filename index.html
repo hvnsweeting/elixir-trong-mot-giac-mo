@@ -310,32 +310,43 @@ Reference modules
   Map
 </code></pre>
 
-<h3 id="mapset-kieu-du-lieu-tap-hop">mapset - kiểu dữ liệu tập hợp</h3>
-<ul>
-<li>Chứa mỗi phần tử 1 lần, không có thứ tự <a href="http://stackoverflow.com/a/40408469">trừ 32 phần tử đầu</a> (tức không thể sắp xếp, phải đổi thành kiểu list mới sắp xếp được.)</li>
-<li>Tạo set mới</li>
-</ul>
-<pre><code>iex(10)&gt; MapSet.new
-#MapSet&lt;[]&gt;
-iex(11)&gt; MapSet.new([1, 3, 43, 98])
-#MapSet&lt;[1, 3, 43, 98]&gt;
-iex(14)&gt; MapSet.size(MapSet.new([1,3,3]))
-2
+<h3 id="mapset-kieu-du-lieu-tap-hop">MapSet - kiểu dữ liệu tập hợp</h3>
+<p>Chứa mỗi phần tử 1 lần, không có thứ tự <a href="http://stackoverflow.com/a/40408469">trừ 32 phần tử đầu</a> (tức không thể sắp xếp, phải đổi thành kiểu list mới sắp xếp được.)</p>
+<pre><code>iex(2)&gt; i MapSet.new([1,2,2,3,2,1])
+Term
+  #MapSet&lt;[1, 2, 3]&gt;
+Data type
+  MapSet
+Description
+  This is a struct. Structs are maps with a __struct__ key.
+Reference modules
+  MapSet, Map
+Implemented protocols
+  IEx.Info, Enumerable, Inspect, Collectable
 </code></pre>
 
-<ul>
-<li>Kiểm tra phần tử</li>
-</ul>
-<pre><code>iex(12)&gt; MapSet.member?(MapSet.new([1, 3, 43, 98]) , 9)
-false
-</code></pre>
-
-<ul>
-<li>Các phép toán tập hợp (giao - intersection, hợp - union,...)</li>
-</ul>
-<pre><code>iex(16)&gt; MapSet.intersection(MapSet.new([1,3,5]), MapSet.new([1,5,2]))
-#MapSet&lt;[1, 5]&gt;
-#MapSet&lt;[1, 2, 3, 5]&gt;
+<h3 id="struct">Struct</h3>
+<p>Struct là dạng đặc biệt của Map, dùng để biểu diễn các kiểu dữ liệu
+do người dùng tự định nghĩa.</p>
+<pre><code>iex(1)&gt; defmodule Person do
+...(1)&gt;   defstruct [:name, :age]
+...(1)&gt; end
+{:module, Person,
+ &lt;&lt;70, 79, 82, 49, 0, 0, 8, 20, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0,
+   234, 0, 0, 0, 22, 13, 69, 108, 105, 120, 105, 114, 46, 80, 101, 114,
+   115, 111, 110, 8, 95, 95, 105, 110, 102, 111, 95, 95, ...&gt;&gt;,
+ %Person{age: nil, name: nil}}
+iex(2)&gt; i %Person{name: &quot;HVN&quot;, age: 27}
+Term
+  %Person{age: 27, name: &quot;HVN&quot;}
+Data type
+  Person
+Description
+  This is a struct. Structs are maps with a __struct__ key.
+Reference modules
+  Person, Map
+Implemented protocols
+  IEx.Info, Inspect
 </code></pre>
 
 <h2 id="cac-thao-tac-co-ban-voi-cac-kieu-du-lieu">Các thao tác cơ bản với các kiểu dữ liệu</h2>
@@ -902,6 +913,50 @@ iex(72)&gt; put_in users[:hvn].age, 29
 </code></pre>
 
 <p>Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module <code>Enum</code> dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như <code>List</code></p>
+<h3 id="mapset">MapSet</h3>
+<ul>
+<li>Kiểm tra phần tử</li>
+</ul>
+<pre><code>iex(12)&gt; MapSet.member?(MapSet.new([1, 3, 43, 98]) , 9)
+false
+</code></pre>
+
+<ul>
+<li>Các phép toán tập hợp (giao - intersection, hợp - union,...)</li>
+</ul>
+<pre><code>iex(16)&gt; MapSet.intersection(MapSet.new([1,3,5]), MapSet.new([1,5,2]))
+#MapSet&lt;[1, 5]&gt;
+#MapSet&lt;[1, 2, 3, 5]&gt;
+</code></pre>
+
+<h3 id="struct_1">Struct</h3>
+<p>Lấy giá trị của field</p>
+<pre><code>iex(1)&gt; defmodule Person do
+...(1)&gt;   defstruct [:name, :age]
+...(1)&gt; end
+...
+iex(3)&gt; Map.fetch %Person{name: &quot;HVN&quot;, age: 27}, :name
+{:ok, &quot;HVN&quot;}
+</code></pre>
+
+<p>Thay đổi giá trị của các field trong struct</p>
+<pre><code>iex(4)&gt; hvn = %Person{name: &quot;HVN&quot;, age: 27}
+%Person{age: 27, name: &quot;HVN&quot;}
+iex(5)&gt; %{hvn | age: hvn.age + 1}
+%Person{age: 28, name: &quot;HVN&quot;}
+</code></pre>
+
+<p>Thay đổi giá trị của nested value (value của field trong struct trong struct khác ...)</p>
+<pre><code>iex(2)&gt; defmodule Class do
+...(2)&gt;   defstruct person: %Person{}, name: &quot;PyMI&quot;
+...(2)&gt; end
+...
+iex(4)&gt; pymi = %Class{person: %Person{name: &quot;HVN&quot;, age: 27}}
+%Class{name: &quot;PyMI&quot;, person: %Person{age: 27, name: &quot;HVN&quot;}}
+iex(5)&gt; put_in pymi.person.age, 28
+%Class{name: &quot;PyMI&quot;, person: %Person{age: 28, name: &quot;HVN&quot;}}
+</code></pre>
+
 <h2 id="pattern-matching">Pattern matching</h2>
 <p><code>=</code> : the match operator
 - Khi gán biến, biến phải nằm bên trái dấu <code>=</code></p>
@@ -1518,5 +1573,5 @@ Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình 
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-08-03 10:20:30
+Build Date UTC : 2017-08-04 08:43:47
 -->
