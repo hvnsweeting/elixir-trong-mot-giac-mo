@@ -245,28 +245,48 @@ Reference modules
   Map
 ```
 
-### mapset - kiểu dữ liệu tập hợp
-- Chứa mỗi phần tử 1 lần, không có thứ tự [trừ 32 phần tử đầu](http://stackoverflow.com/a/40408469) (tức không thể sắp xếp, phải đổi thành kiểu list mới sắp xếp được.)
-- Tạo set mới
+### MapSet - kiểu dữ liệu tập hợp
+Chứa mỗi phần tử 1 lần, không có thứ tự [trừ 32 phần tử đầu](http://stackoverflow.com/a/40408469) (tức không thể sắp xếp, phải đổi thành kiểu list mới sắp xếp được.)
+
 ```
-iex(10)> MapSet.new
-#MapSet<[]>
-iex(11)> MapSet.new([1, 3, 43, 98])
-#MapSet<[1, 3, 43, 98]>
-iex(14)> MapSet.size(MapSet.new([1,3,3]))
-2
-```
-- Kiểm tra phần tử
-```
-iex(12)> MapSet.member?(MapSet.new([1, 3, 43, 98]) , 9)
-false
+iex(2)> i MapSet.new([1,2,2,3,2,1])
+Term
+  #MapSet<[1, 2, 3]>
+Data type
+  MapSet
+Description
+  This is a struct. Structs are maps with a __struct__ key.
+Reference modules
+  MapSet, Map
+Implemented protocols
+  IEx.Info, Enumerable, Inspect, Collectable
 ```
 
-- Các phép toán tập hợp (giao - intersection, hợp - union,...)
+### Struct
+
+Struct là dạng đặc biệt của Map, dùng để biểu diễn các kiểu dữ liệu
+do người dùng tự định nghĩa.
+
 ```
-iex(16)> MapSet.intersection(MapSet.new([1,3,5]), MapSet.new([1,5,2]))
-#MapSet<[1, 5]>
-#MapSet<[1, 2, 3, 5]>
+iex(1)> defmodule Person do
+...(1)>   defstruct [:name, :age]
+...(1)> end
+{:module, Person,
+ <<70, 79, 82, 49, 0, 0, 8, 20, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0,
+   234, 0, 0, 0, 22, 13, 69, 108, 105, 120, 105, 114, 46, 80, 101, 114,
+   115, 111, 110, 8, 95, 95, 105, 110, 102, 111, 95, 95, ...>>,
+ %Person{age: nil, name: nil}}
+iex(2)> i %Person{name: "HVN", age: 27}
+Term
+  %Person{age: 27, name: "HVN"}
+Data type
+  Person
+Description
+  This is a struct. Structs are maps with a __struct__ key.
+Reference modules
+  Person, Map
+Implemented protocols
+  IEx.Info, Inspect
 ```
 
 ## Các thao tác cơ bản với các kiểu dữ liệu
@@ -853,6 +873,51 @@ iex(2)>  %{a: [1, 2, 3], b: ["meo", "ga"]} |> Enum.into(%{}, fn {k, v} -> {k, le
 ```
 
 Mỗi kiểu dữ liệu đều có một module tương ứng cung cấp các function cần thiết: List, Map, String. Module `Enum` dùng chung cho các kiểu dữ liệu cho phép duyệt qua từng phần tử: như `List`
+
+### MapSet
+- Kiểm tra phần tử
+```
+iex(12)> MapSet.member?(MapSet.new([1, 3, 43, 98]) , 9)
+false
+```
+
+- Các phép toán tập hợp (giao - intersection, hợp - union,...)
+```
+iex(16)> MapSet.intersection(MapSet.new([1,3,5]), MapSet.new([1,5,2]))
+#MapSet<[1, 5]>
+#MapSet<[1, 2, 3, 5]>
+```
+
+### Struct
+Lấy giá trị của field
+```
+iex(1)> defmodule Person do
+...(1)>   defstruct [:name, :age]
+...(1)> end
+...
+iex(3)> Map.fetch %Person{name: "HVN", age: 27}, :name
+{:ok, "HVN"}
+```
+
+Thay đổi giá trị của các field trong struct
+```
+iex(4)> hvn = %Person{name: "HVN", age: 27}
+%Person{age: 27, name: "HVN"}
+iex(5)> %{hvn | age: hvn.age + 1}
+%Person{age: 28, name: "HVN"}
+```
+
+Thay đổi giá trị của nested value (value của field trong struct trong struct khác ...)
+```
+iex(2)> defmodule Class do
+...(2)>   defstruct person: %Person{}, name: "PyMI"
+...(2)> end
+...
+iex(4)> pymi = %Class{person: %Person{name: "HVN", age: 27}}
+%Class{name: "PyMI", person: %Person{age: 27, name: "HVN"}}
+iex(5)> put_in pymi.person.age, 28
+%Class{name: "PyMI", person: %Person{age: 28, name: "HVN"}}
+```
 
 ## Pattern matching
 
