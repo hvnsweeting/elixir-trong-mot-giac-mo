@@ -23,10 +23,11 @@ Việc quản lý các thư viện được Mix xử lý rất đơn giản:
 ```
 defp deps do
   [
-    {:poison, "~> 3.1"}
-    {:httpotion, "~> 3.0.2"},
+    {:poison, "~> 3.1"},
+    {:httpoison, "~> 0.12"},
     #...
   ]
+
 end
 ```
 
