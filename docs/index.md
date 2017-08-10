@@ -32,9 +32,20 @@ Thực hiện trên:
 
 ```
 $ elixir --version
-Erlang/OTP 19 [erts-8.0.2] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+Erlang/OTP 20 [erts-9.0] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false]
 
-Elixir 1.3.2
+Elixir 1.5.0
+```
+
+Bật `iex`:
+```
+$ iex
+Erlang/OTP 20 [erts-9.0] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false]
+
+Interactive Elixir (1.5.0) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> IO.puts "Hello FAMILUG.org!"
+Hello FAMILUG.org!
+:ok
 ```
 
 PS: trong bài có một số đoạn so sánh với tính năng tương tự trên Python - bởi tác giả là người có kinh nghiệm với Python - giúp các lập trình viên Python dễ kết nối các khái niệm. Phần so sánh này hoàn toàn không cần thiết với người không biết Python và có thể bỏ qua.
