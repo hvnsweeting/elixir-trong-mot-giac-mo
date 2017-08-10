@@ -39,6 +39,37 @@ Elixir 1.3.2
 
 PS: trong bài có một số đoạn so sánh với tính năng tương tự trên Python - bởi tác giả là người có kinh nghiệm với Python - giúp các lập trình viên Python dễ kết nối các khái niệm. Phần so sánh này hoàn toàn không cần thiết với người không biết Python và có thể bỏ qua.
 
+## Những điều cần biết
+#### Các ví dụ trong bài này đều thực hiện trực tiếp trên `iex`
+cài Elixir xong sẽ có kèm `iex` luôn.
+#### Hủy một câu lệnh gõ hỏng
+Khi gõ một sai một câu lệnh, thực hiện bước sau để hủy:
+
+```
+iex(5)>
+User switch command
+--> i
+--> c
+** (EXIT) interrupted
+```
+
+Tức bấm Ctrl-G rồi i, rồi c.
+
+Hoặc cách khác là gõ `#iex:break`
+
+```
+iex(5)> IO.put(
+...(5)> #iex:break
+** (TokenMissingError) iex:5: incomplete expression
+```
+
+#### Print để debug
+Dùng `IO.inspect(x)` để in ra màn hình (để debug) thay vì `IO.puts(x)` (tương
+tự print trong các ngôn ngữ khác).
+
+#### Xóa màn hình
+Gõ `clear` để xóa sạch màn hình (gọi function clear).
+
 ## Các kiểu dữ liệu cơ bản
 
 ### Integer
