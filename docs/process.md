@@ -130,6 +130,51 @@ iex(33)> receive do
 ...(33)> end
 "Got hello from #PID<0.136.0>"
 ```
+## Tính toán "song song" với Task.async
+Chạy một function theo kiểu "async" rất đơn giản, `Task.async` sẽ chạy và
+return task đó
+```elixir
+iex(16)> t = Task.async(fn -> 3 * 3 end)
+%Task{owner: #PID<0.85.0>, pid: #PID<0.130.0>,
+ ref: #Reference<0.83711.2587885569.77446>}
+```
+
+Đợi rồi lấy kết quả bằng cách gọi Task.await với task đã chạy function tính
+toán
+```elixir
+iex(17)> Task.await(t)
+9
+```
+
+Nhiều khi, đợi chờ không phải là hạnh phúc, ta dùng `Task.yield`, ta nhận được
+kết quả hoặc `nil` nếu chưa tính xong.
+
+```elixir
+iex(21)> t = Task.async(fn -> 1 + 1 end)
+%Task{owner: #PID<0.85.0>, pid: #PID<0.137.0>,
+ ref: #Reference<0.83711.2587885569.77738>}
+iex(22)> Task.yield(t)
+{:ok, 2}
+
+iex(28)> t = Task.async(fn ->
+...(28)>   :timer.sleep(10000)
+...(28)>   1 + 1
+...(28)>   end)
+%Task{owner: #PID<0.85.0>, pid: #PID<0.156.0>,
+ ref: #Reference<0.83711.2587885569.79354>}
+iex(29)> Task.yield(t)  # mặc định chờ 5000 ms
+nil
+```
+
+Tính toán song song
+
+```elixir
+iex(35)> [1,2,3,4]
+|> Enum.map(fn x -> Task.async(fn -> x * x end) end)
+|> Task.yield_many(100)
+|> Enum.map(fn({_task, {:ok, result}}) -> result end)
+[1, 4, 9, 16]
+```
 
 # Gửi message qua lại giữa 2 process
 Những ví dụ đơn giản trên chỉ gửi message từ một process đến process còn lại mà không hề có phản hồi,
@@ -193,6 +238,7 @@ iex(10)> flush()
 iex(11)> Process.alive? pid
 false
 ```
+
 
 Những khái niệm "process", send, receive không quá phức tạp là phần cốt yếu đểu giúp Erlang/Elixir tạo nên những hệ thống có thể chạy hàng trăm ngàn process cùng một lúc. Khi vấn đề là một, hai process, chúng ta quan tâm đến từng process, nhưng khi bài toán lớn lên, ta sẽ cần quan tâm đến việc làm sao quản lý được nhiều process, và điều khiển chúng chạy thế nào cho phù hợp. Phần #TODO sẽ đi chi tiết vào việc quản lý các process với sức mạnh của OTP.
 
