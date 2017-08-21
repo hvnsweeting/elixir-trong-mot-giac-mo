@@ -49,6 +49,9 @@
                         <a href="..">Home</a>
                     </li>
                     <li >
+                        <a href="../agent/">Agent</a>
+                    </li>
+                    <li >
                         <a href="../db/">Db</a>
                     </li>
                     <li >
@@ -94,6 +97,7 @@
             <li><a href="#receive">Receive</a></li>
             <li><a href="#sinh-process-e-gui-message">Sinh process để gửi message</a></li>
         <li class="main "><a href="#tasks">Tasks</a></li>
+            <li><a href="#tinh-toan-song-song-voi-taskasync">Tính toán "song song" với Task.async</a></li>
         <li class="main "><a href="#gui-message-qua-lai-giua-2-process">Gửi message qua lại giữa 2 process</a></li>
             <li><a href="#tham-khao">Tham khảo</a></li>
     </ul>
@@ -201,6 +205,46 @@ iex(33)&gt; receive do
 ...(33)&gt;   {:hello, pid} -&gt; &quot;Got hello from #{inspect pid}&quot;
 ...(33)&gt; end
 &quot;Got hello from #PID&lt;0.136.0&gt;&quot;
+</code></pre>
+
+<h2 id="tinh-toan-song-song-voi-taskasync">Tính toán "song song" với Task.async</h2>
+<p>Chạy một function theo kiểu "async" rất đơn giản, <code>Task.async</code> sẽ chạy và
+return task đó</p>
+<pre><code class="elixir">iex(16)&gt; t = Task.async(fn -&gt; 3 * 3 end)
+%Task{owner: #PID&lt;0.85.0&gt;, pid: #PID&lt;0.130.0&gt;,
+ ref: #Reference&lt;0.83711.2587885569.77446&gt;}
+</code></pre>
+
+<p>Đợi rồi lấy kết quả bằng cách gọi Task.await với task đã chạy function tính
+toán</p>
+<pre><code class="elixir">iex(17)&gt; Task.await(t)
+9
+</code></pre>
+
+<p>Nhiều khi, đợi chờ không phải là hạnh phúc, ta dùng <code>Task.yield</code>, ta nhận được
+kết quả hoặc <code>nil</code> nếu chưa tính xong.</p>
+<pre><code class="elixir">iex(21)&gt; t = Task.async(fn -&gt; 1 + 1 end)
+%Task{owner: #PID&lt;0.85.0&gt;, pid: #PID&lt;0.137.0&gt;,
+ ref: #Reference&lt;0.83711.2587885569.77738&gt;}
+iex(22)&gt; Task.yield(t)
+{:ok, 2}
+
+iex(28)&gt; t = Task.async(fn -&gt;
+...(28)&gt;   :timer.sleep(10000)
+...(28)&gt;   1 + 1
+...(28)&gt;   end)
+%Task{owner: #PID&lt;0.85.0&gt;, pid: #PID&lt;0.156.0&gt;,
+ ref: #Reference&lt;0.83711.2587885569.79354&gt;}
+iex(29)&gt; Task.yield(t)  # mặc định chờ 5000 ms
+nil
+</code></pre>
+
+<p>Tính toán song song</p>
+<pre><code class="elixir">iex(35)&gt; [1,2,3,4]
+|&gt; Enum.map(fn x -&gt; Task.async(fn -&gt; x * x end) end)
+|&gt; Task.yield_many(100)
+|&gt; Enum.map(fn({_task, {:ok, result}}) -&gt; result end)
+[1, 4, 9, 16]
 </code></pre>
 
 <h1 id="gui-message-qua-lai-giua-2-process">Gửi message qua lại giữa 2 process</h1>
