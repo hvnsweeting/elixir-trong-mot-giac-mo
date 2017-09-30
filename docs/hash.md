@@ -2,8 +2,8 @@
 Hash function là function nhận đầu vào tùy ý, sinh ra kết quả (thường biểu diễn
 ở dạng string) có độ lớn cố định.
 Chỉ cần thỏa mãn yêu cầu như vậy là đã có thể trở thành 1 hash function.
-Có rất nhiều các hash function khác nhau, mỗi loại sẽ có tính chất riêng,
-và không phải cái nào cũng dùng được trong bảo mật.
+Có [rất nhiều các hash function](https://en.wikipedia.org/wiki/List_of_hash_functions#Non-cryptographic_hash_functions), mỗi loại sẽ có tính chất riêng, phục vụ cho những mục đích riêng.
+Chú ý: không phải hash function nào cũng dùng được trong bảo mật.
 
 `md5`, `sha1`, `sha256` là những hash function nổi tiếng nhất.
 Elixir hỗ trợ gọi các hash function từ Erlang, thông qua module `:crypto`.
