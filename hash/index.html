@@ -96,9 +96,6 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#hash">Hash</a></li>
-        <li class="main "><a href="#reference0104787425308871168139290">Reference&lt;0.104787425.3088711681.39290&gt;</a></li>
-        <li class="main "><a href="#reference0104787425308871168139875">Reference&lt;0.104787425.3088711681.39875&gt;</a></li>
-        <li class="main "><a href="#reference0104787425308871168139890">Reference&lt;0.104787425.3088711681.39890&gt;</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -127,17 +124,16 @@ $ echo -n 123456 | sha256sum
 <p>Kết quả như nhau.</p>
 <p>Khi cần tính hash những gì lớn hơn 1 string (ví dụ 1 file video 1GB),
 ta phải khởi tạo, update nhiều lần qua từng phần của file, rồi tính ra mã hash
-cuối cùng. Ví dụ ta chia <code>123456</code> thành <code>123</code> và <code>456</code></p>
-<p>```elixir
-iex(19)&gt; md5 = :crypto.hash_init(:md5)</p>
-<h1 id="reference0104787425308871168139290">Reference&lt;0.104787425.3088711681.39290&gt;</h1>
-<p>iex(20)&gt; md5 = :crypto.hash_update(md5, "123")</p>
-<h1 id="reference0104787425308871168139875">Reference&lt;0.104787425.3088711681.39875&gt;</h1>
-<p>iex(21)&gt; md5 = :crypto.hash_update(md5, "456")</p>
-<h1 id="reference0104787425308871168139890">Reference&lt;0.104787425.3088711681.39890&gt;</h1>
-<p>iex(22)&gt; :crypto.hash_final(md5) |&gt; Base.encode16 |&gt; String.downcase
-"e10adc3949ba59abbe56e057f20f883e"
-````</p></div>
+cuối cùng. Ví dụ ta chia <code>123456</code> thành <code>123</code> và <code>456</code>.</p>
+<pre><code class="elixir">iex(19)&gt; md5 = :crypto.hash_init(:md5)
+#Reference&lt;0.104787425.3088711681.39290&gt;
+iex(20)&gt; md5 = :crypto.hash_update(md5, &quot;123&quot;)
+#Reference&lt;0.104787425.3088711681.39875&gt;
+iex(21)&gt; md5 = :crypto.hash_update(md5, &quot;456&quot;)
+#Reference&lt;0.104787425.3088711681.39890&gt;
+iex(22)&gt; :crypto.hash_final(md5) |&gt; Base.encode16 |&gt; String.downcase
+&quot;e10adc3949ba59abbe56e057f20f883e&quot;
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
