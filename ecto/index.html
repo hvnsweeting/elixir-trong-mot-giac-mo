@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Http client - Lá ngón</title>
+        <title>Ecto - Lá ngón</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -54,14 +54,14 @@
                     <li >
                         <a href="../db/">Db</a>
                     </li>
-                    <li >
-                        <a href="../ecto/">Ecto</a>
+                    <li class="active">
+                        <a href="./">Ecto</a>
                     </li>
                     <li >
                         <a href="../hash/">Hash</a>
                     </li>
-                    <li class="active">
-                        <a href="./">Http client</a>
+                    <li >
+                        <a href="../http-client/">Http client</a>
                     </li>
                     <li >
                         <a href="../process/">Process</a>
@@ -78,12 +78,12 @@
                     </a>
                 </li>
                     <li >
-                        <a rel="next" href="../hash/">
+                        <a rel="next" href="../db/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../process/">
+                        <a rel="prev" href="../hash/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -95,61 +95,54 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#http-json">HTTP &amp; JSON</a></li>
-            <li><a href="#chon-thu-vien-nao">Chọn thư viện nào?</a></li>
-            <li><a href="#lay-du-lieu-tu-github-api">Lấy dữ liệu từ GitHub API</a></li>
+        <li class="main active"><a href="#generate-xxx-schema">Generate XXX schema</a></li>
+        <li class="main "><a href="#migrate">Migrate</a></li>
+        <li class="main "><a href="#ecto-schema">Ecto schema</a></li>
+        <li class="main "><a href="#ecto-changesets">Ecto changesets</a></li>
+        <li class="main "><a href="#persistent">Persistent</a></li>
+        <li class="main "><a href="#context">Context</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="http-json">HTTP &amp; JSON</h1>
-<p>Sau khi đã nắm được các khái niệm cơ bản của Elixir, thì một việc ắt phải làm vì vô cùng quan trọng: đó là biết cách dùng thư viện ngoài (thư viện không có sẵn khi cài Elixir/ thư viện bên thứ 3).</p>
-<h2 id="chon-thu-vien-nao">Chọn thư viện nào?</h2>
-<p>Câu hỏi tưởng chừng đơn giản này thực ra là một câu hỏi rất nguy hiểm, khó trả lời, cũng cùng kiểu như câu "tối nay ăn gì" đã khiến cho hàng ngàn cặp đôi rơi vào những cuộc cãi cọ...</p>
-<p>Ta không cần phải đau đầu hay đắn đo gì, một thư viện hỗ trợ gửi HTTP request (GET/POST) sẽ là thứ hữu dụng và thực tế nhất bạn có thể dùng. Chỉ đơn thuần biết dùng HTTP client gọi vào các API, ta đã có một đống dữ liệu để làm ra một cái gì đó có ích.
-Dữ liệu trả về khi ta gọi các API sẽ có format JSON, một thư viện JSON sẽ là vô cùng quan trọng ở đây.</p>
-<h3 id="httpotion-http-client">HTTPotion - HTTP client</h3>
-<p>Elixir chạy trên máy ảo BEAM của Erlang, nên thư viện HTTP client của Erlang thì đã sẵn, hoàn thiện hàng chục năm rồi. Người ta chỉ cần thêm bớt một chút sao cho trông nó "Elixir" hơn là được.</p>
-<p><a href="https://github.com/myfreeweb/httpotion">HTTPotion</a> là thư viện được lựa chọn ở đây, nó cũng có vẻ là thư viện phổ biến nhất trong các HTTP client của Elixir.  HTTPotion xây dựng dựa trên thư viện "hackney" của Erlang.</p>
-<p>Việc quản lý các thư viện được Mix xử lý rất đơn giản:
-- Thêm tên của thư viện vào list trong function <code>deps</code>
-- Chạy <code>mix deps.get</code> để tải thư viện về
-- Bật <code>iex -S mix</code> để load thư viện vào rồi dùng trong chế độ interactive.</p>
-<pre><code>defp deps do
-  [
-    {:poison, &quot;~&gt; 3.1&quot;},
-    {:httpoison, &quot;~&gt; 0.12&quot;},
-    #...
-  ]
-
-end
+<h2 id="generate-xxx-schema">Generate XXX schema</h2>
+<p>phx.gen.schema MODULE_NAME RESOURCEs attribute:value1 attributeN:valueN</p>
+<p>Create file in lib/APPNAME/RESOURCEs.ex which define schema</p>
+<h2 id="migrate">Migrate</h2>
+<p>mix phx.migrate</p>
+<ul>
+<li>Run file in priv/repo/migrations</li>
+</ul>
+<h2 id="ecto-schema">Ecto schema</h2>
+<p>Mapping Elixir values &lt;---&gt; external data source 
+and mapping relationship one schema &lt;---&gt; other schemas</p>
+<h2 id="ecto-changesets">Ecto changesets</h2>
+<p>Changesets defines a pipeline of transformations.</p>
+<p>Transformations: 
+- Casting
+- Validating
+- Filtering</p>
+<p>External data ---- CHANGESETS ----&gt; ready data.</p>
+<h2 id="persistent">Persistent</h2>
+<ul>
+<li>Insert</li>
+</ul>
+<pre><code class="elixir">Repo.insert(%Resource{key1:value1, ...})
 </code></pre>
 
-<h3 id="poison-json-library">Poison - JSON library</h3>
-<p>Ta cài <a href="https://github.com/devinus/poison">thư viện Poison - thư viện xử lý JSON</a> phổ biến nhất của Elixir.</p>
-<h2 id="lay-du-lieu-tu-github-api">Lấy dữ liệu từ GitHub API</h2>
-<p>Thử dùng bộ đôi thư viện này để lấy danh sách các contributor của <a href="https://github.com/saltstack/salt/">SaltStack</a> dùng GitHub API:</p>
-<pre><code>iex(2)&gt; {:ok, response} = HTTPoison.get &quot;https://api.github.com/repos/saltstack/salt/contributors?page=3&quot;
-{:ok,
- %HTTPoison.Response{body: &quot;[{\&quot;login\&quot;:\&quot;kjkuan\&quot;,\&quot;id\&quot;:973329,\&quot;avatar_url\&quot;:\&quot;
-...
-
-iex(5)&gt; {:ok, contribs} = Poison.decode(Map.get(response, :body))
-{:ok,
- [%{&quot;avatar_url&quot; =&gt; &quot;https://avatars3.githubusercontent.com/u/973329?v=3&quot;,
-    &quot;contributions&quot; =&gt; 88,
-    &quot;events_url&quot; =&gt; &quot;https://api.github.com/users/kjkuan/events{/privacy}&quot;,
-...
-
-iex(6)&gt; contribs |&gt; Enum.map(fn contrib -&gt; Map.get(contrib, &quot;login&quot;) end)
-[&quot;kjkuan&quot;, &quot;thedrow&quot;, &quot;alexbleotu&quot;, &quot;bdrung&quot;, &quot;robertkeizer&quot;, &quot;hvnsweeting&quot;,
- &quot;jhutchins&quot;, &quot;giantlock&quot;, &quot;aboe76&quot;, &quot;multani&quot;, &quot;herlo&quot;, &quot;0xf10e&quot;, &quot;ranl&quot;,
- &quot;evinrude&quot;, &quot;baijum&quot;, &quot;cedwards&quot;, &quot;lorengordon&quot;, &quot;syphernl&quot;, &quot;bbinet&quot;, &quot;m03&quot;,
- &quot;kaithar&quot;, &quot;MTecknology&quot;, &quot;rominf&quot;, &quot;akissa&quot;, &quot;claudiupopescu&quot;, &quot;jodv&quot;,
- &quot;inthecloud247&quot;, &quot;castor-morveer&quot;, &quot;fxdgear&quot;, &quot;markusgattol&quot;]
+<ul>
+<li>Select</li>
+</ul>
+<pre><code class="elixir">Repo.one(from s in Student, where: ilike(s.email, &quot;%u%&quot;), select: s.email)
+Repo.all(from s in Student, select: %{s.id =&gt; s.email})
 </code></pre>
 
-<p>Đơn giản, ngắn gọn, sạch sẽ 🏆</p></div>
+<h2 id="context">Context</h2>
+<ul>
+<li>Grouping feature, make them independent, encapsulate concepts</li>
+<li>Generate a site with</li>
+</ul>
+<p>mix phx.gen.html CONTEXT MODULENAME Resources field1:type1 field2:type2 ...</p></div>
         </div>
 
         <footer class="col-md-12">

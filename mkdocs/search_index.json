@@ -381,6 +381,66 @@
             "title": "\u0110\u1ecdc t\u1eeb database"
         },
         {
+            "location": "/ecto/",
+            "text": "Generate XXX schema\n\n\nphx.gen.schema MODULE_NAME RESOURCEs attribute:value1 attributeN:valueN\n\n\nCreate file in lib/APPNAME/RESOURCEs.ex which define schema\n\n\nMigrate\n\n\nmix phx.migrate\n\n\n\n\nRun file in priv/repo/migrations\n\n\n\n\nEcto schema\n\n\nMapping Elixir values <---> external data source \nand mapping relationship one schema <---> other schemas\n\n\nEcto changesets\n\n\nChangesets defines a pipeline of transformations.\n\n\nTransformations: \n- Casting\n- Validating\n- Filtering\n\n\nExternal data ---- CHANGESETS ----> ready data.\n\n\nPersistent\n\n\n\n\nInsert\n\n\n\n\nRepo.insert(%Resource{key1:value1, ...})\n\n\n\n\n\n\nSelect\n\n\n\n\nRepo.one(from s in Student, where: ilike(s.email, \"%u%\"), select: s.email)\nRepo.all(from s in Student, select: %{s.id => s.email})\n\n\n\n\nContext\n\n\n\n\nGrouping feature, make them independent, encapsulate concepts\n\n\nGenerate a site with\n\n\n\n\nmix phx.gen.html CONTEXT MODULENAME Resources field1:type1 field2:type2 ...",
+            "title": "Ecto"
+        },
+        {
+            "location": "/ecto/#generate-xxx-schema",
+            "text": "phx.gen.schema MODULE_NAME RESOURCEs attribute:value1 attributeN:valueN  Create file in lib/APPNAME/RESOURCEs.ex which define schema",
+            "title": "Generate XXX schema"
+        },
+        {
+            "location": "/ecto/#migrate",
+            "text": "mix phx.migrate   Run file in priv/repo/migrations",
+            "title": "Migrate"
+        },
+        {
+            "location": "/ecto/#ecto-schema",
+            "text": "Mapping Elixir values <---> external data source \nand mapping relationship one schema <---> other schemas",
+            "title": "Ecto schema"
+        },
+        {
+            "location": "/ecto/#ecto-changesets",
+            "text": "Changesets defines a pipeline of transformations.  Transformations: \n- Casting\n- Validating\n- Filtering  External data ---- CHANGESETS ----> ready data.",
+            "title": "Ecto changesets"
+        },
+        {
+            "location": "/ecto/#persistent",
+            "text": "Insert   Repo.insert(%Resource{key1:value1, ...})   Select   Repo.one(from s in Student, where: ilike(s.email, \"%u%\"), select: s.email)\nRepo.all(from s in Student, select: %{s.id => s.email})",
+            "title": "Persistent"
+        },
+        {
+            "location": "/ecto/#context",
+            "text": "Grouping feature, make them independent, encapsulate concepts  Generate a site with   mix phx.gen.html CONTEXT MODULENAME Resources field1:type1 field2:type2 ...",
+            "title": "Context"
+        },
+        {
+            "location": "/hash/",
+            "text": "Hash\n\n\nHash function l\u00e0 function nh\u1eadn \u0111\u1ea7u v\u00e0o t\u00f9y \u00fd, sinh ra k\u1ebft qu\u1ea3 (th\u01b0\u1eddng bi\u1ec3u di\u1ec5n\n\u1edf d\u1ea1ng string) c\u00f3 \u0111\u1ed9 l\u1edbn c\u1ed1 \u0111\u1ecbnh.\nCh\u1ec9 c\u1ea7n th\u1ecfa m\u00e3n y\u00eau c\u1ea7u nh\u01b0 v\u1eady l\u00e0 \u0111\u00e3 c\u00f3 th\u1ec3 tr\u1edf th\u00e0nh 1 hash function.\nC\u00f3 r\u1ea5t nhi\u1ec1u c\u00e1c hash function kh\u00e1c nhau, m\u1ed7i lo\u1ea1i s\u1ebd c\u00f3 t\u00ednh ch\u1ea5t ri\u00eang,\nv\u00e0 kh\u00f4ng ph\u1ea3i c\u00e1i n\u00e0o c\u0169ng d\u00f9ng \u0111\u01b0\u1ee3c trong b\u1ea3o m\u1eadt.\n\n\nmd5\n, \nsha1\n, \nsha256\n l\u00e0 nh\u1eefng hash function n\u1ed5i ti\u1ebfng nh\u1ea5t.\nElixir h\u1ed7 tr\u1ee3 g\u1ecdi c\u00e1c hash function t\u1eeb Erlang, th\u00f4ng qua module \n:crypto\n.\n\n\niex(17)> :crypto.hash(:md5, \"123456\") |> Base.encode16 |> String.downcase\n\"e10adc3949ba59abbe56e057f20f883e\"\niex(18)> :crypto.hash(:sha256, \"123456\") |> Base.encode16 |> String.downcase\n\"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\"\n\n\n\n\nKi\u1ec3m tra k\u1ebft qu\u1ea3 so v\u1edbi d\u00f2ng l\u1ec7nh tr\u00ean Linux:\n\n\n$ echo -n 123456 | md5sum\ne10adc3949ba59abbe56e057f20f883e  -\n$ echo -n 123456 | sha256sum\n8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92  -\n\n\n\n\nK\u1ebft qu\u1ea3 nh\u01b0 nhau.\n\n\nKhi c\u1ea7n t\u00ednh hash nh\u1eefng g\u00ec l\u1edbn h\u01a1n 1 string (v\u00ed d\u1ee5 1 file video 1GB),\nta ph\u1ea3i kh\u1edfi t\u1ea1o, update nhi\u1ec1u l\u1ea7n qua t\u1eebng ph\u1ea7n c\u1ee7a file, r\u1ed3i t\u00ednh ra m\u00e3 hash\ncu\u1ed1i c\u00f9ng. V\u00ed d\u1ee5 ta chia \n123456\n th\u00e0nh \n123\n v\u00e0 \n456\n\n\n```elixir\niex(19)> md5 = :crypto.hash_init(:md5)\n\n\nReference<0.104787425.3088711681.39290>\n\n\niex(20)> md5 = :crypto.hash_update(md5, \"123\")\n\n\nReference<0.104787425.3088711681.39875>\n\n\niex(21)> md5 = :crypto.hash_update(md5, \"456\")\n\n\nReference<0.104787425.3088711681.39890>\n\n\niex(22)> :crypto.hash_final(md5) |> Base.encode16 |> String.downcase\n\"e10adc3949ba59abbe56e057f20f883e\"\n````",
+            "title": "Hash"
+        },
+        {
+            "location": "/hash/#hash",
+            "text": "Hash function l\u00e0 function nh\u1eadn \u0111\u1ea7u v\u00e0o t\u00f9y \u00fd, sinh ra k\u1ebft qu\u1ea3 (th\u01b0\u1eddng bi\u1ec3u di\u1ec5n\n\u1edf d\u1ea1ng string) c\u00f3 \u0111\u1ed9 l\u1edbn c\u1ed1 \u0111\u1ecbnh.\nCh\u1ec9 c\u1ea7n th\u1ecfa m\u00e3n y\u00eau c\u1ea7u nh\u01b0 v\u1eady l\u00e0 \u0111\u00e3 c\u00f3 th\u1ec3 tr\u1edf th\u00e0nh 1 hash function.\nC\u00f3 r\u1ea5t nhi\u1ec1u c\u00e1c hash function kh\u00e1c nhau, m\u1ed7i lo\u1ea1i s\u1ebd c\u00f3 t\u00ednh ch\u1ea5t ri\u00eang,\nv\u00e0 kh\u00f4ng ph\u1ea3i c\u00e1i n\u00e0o c\u0169ng d\u00f9ng \u0111\u01b0\u1ee3c trong b\u1ea3o m\u1eadt.  md5 ,  sha1 ,  sha256  l\u00e0 nh\u1eefng hash function n\u1ed5i ti\u1ebfng nh\u1ea5t.\nElixir h\u1ed7 tr\u1ee3 g\u1ecdi c\u00e1c hash function t\u1eeb Erlang, th\u00f4ng qua module  :crypto .  iex(17)> :crypto.hash(:md5, \"123456\") |> Base.encode16 |> String.downcase\n\"e10adc3949ba59abbe56e057f20f883e\"\niex(18)> :crypto.hash(:sha256, \"123456\") |> Base.encode16 |> String.downcase\n\"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\"  Ki\u1ec3m tra k\u1ebft qu\u1ea3 so v\u1edbi d\u00f2ng l\u1ec7nh tr\u00ean Linux:  $ echo -n 123456 | md5sum\ne10adc3949ba59abbe56e057f20f883e  -\n$ echo -n 123456 | sha256sum\n8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92  -  K\u1ebft qu\u1ea3 nh\u01b0 nhau.  Khi c\u1ea7n t\u00ednh hash nh\u1eefng g\u00ec l\u1edbn h\u01a1n 1 string (v\u00ed d\u1ee5 1 file video 1GB),\nta ph\u1ea3i kh\u1edfi t\u1ea1o, update nhi\u1ec1u l\u1ea7n qua t\u1eebng ph\u1ea7n c\u1ee7a file, r\u1ed3i t\u00ednh ra m\u00e3 hash\ncu\u1ed1i c\u00f9ng. V\u00ed d\u1ee5 ta chia  123456  th\u00e0nh  123  v\u00e0  456  ```elixir\niex(19)> md5 = :crypto.hash_init(:md5)",
+            "title": "Hash"
+        },
+        {
+            "location": "/hash/#reference0104787425308871168139290",
+            "text": "iex(20)> md5 = :crypto.hash_update(md5, \"123\")",
+            "title": "Reference&lt;0.104787425.3088711681.39290&gt;"
+        },
+        {
+            "location": "/hash/#reference0104787425308871168139875",
+            "text": "iex(21)> md5 = :crypto.hash_update(md5, \"456\")",
+            "title": "Reference&lt;0.104787425.3088711681.39875&gt;"
+        },
+        {
+            "location": "/hash/#reference0104787425308871168139890",
+            "text": "iex(22)> :crypto.hash_final(md5) |> Base.encode16 |> String.downcase\n\"e10adc3949ba59abbe56e057f20f883e\"\n````",
+            "title": "Reference&lt;0.104787425.3088711681.39890&gt;"
+        },
+        {
             "location": "/http-client/",
             "text": "HTTP & JSON\n\n\nSau khi \u0111\u00e3 n\u1eafm \u0111\u01b0\u1ee3c c\u00e1c kh\u00e1i ni\u1ec7m c\u01a1 b\u1ea3n c\u1ee7a Elixir, th\u00ec m\u1ed9t vi\u1ec7c \u1eaft ph\u1ea3i l\u00e0m v\u00ec v\u00f4 c\u00f9ng quan tr\u1ecdng: \u0111\u00f3 l\u00e0 bi\u1ebft c\u00e1ch d\u00f9ng th\u01b0 vi\u1ec7n ngo\u00e0i (th\u01b0 vi\u1ec7n kh\u00f4ng c\u00f3 s\u1eb5n khi c\u00e0i Elixir/ th\u01b0 vi\u1ec7n b\u00ean th\u1ee9 3).\n\n\nCh\u1ecdn th\u01b0 vi\u1ec7n n\u00e0o?\n\n\nC\u00e2u h\u1ecfi t\u01b0\u1edfng ch\u1eebng \u0111\u01a1n gi\u1ea3n n\u00e0y th\u1ef1c ra l\u00e0 m\u1ed9t c\u00e2u h\u1ecfi r\u1ea5t nguy hi\u1ec3m, kh\u00f3 tr\u1ea3 l\u1eddi, c\u0169ng c\u00f9ng ki\u1ec3u nh\u01b0 c\u00e2u \"t\u1ed1i nay \u0103n g\u00ec\" \u0111\u00e3 khi\u1ebfn cho h\u00e0ng ng\u00e0n c\u1eb7p \u0111\u00f4i r\u01a1i v\u00e0o nh\u1eefng cu\u1ed9c c\u00e3i c\u1ecd...\n\n\nTa kh\u00f4ng c\u1ea7n ph\u1ea3i \u0111au \u0111\u1ea7u hay \u0111\u1eafn \u0111o g\u00ec, m\u1ed9t th\u01b0 vi\u1ec7n h\u1ed7 tr\u1ee3 g\u1eedi HTTP request (GET/POST) s\u1ebd l\u00e0 th\u1ee9 h\u1eefu d\u1ee5ng v\u00e0 th\u1ef1c t\u1ebf nh\u1ea5t b\u1ea1n c\u00f3 th\u1ec3 d\u00f9ng. Ch\u1ec9 \u0111\u01a1n thu\u1ea7n bi\u1ebft d\u00f9ng HTTP client g\u1ecdi v\u00e0o c\u00e1c API, ta \u0111\u00e3 c\u00f3 m\u1ed9t \u0111\u1ed1ng d\u1eef li\u1ec7u \u0111\u1ec3 l\u00e0m ra m\u1ed9t c\u00e1i g\u00ec \u0111\u00f3 c\u00f3 \u00edch.\nD\u1eef li\u1ec7u tr\u1ea3 v\u1ec1 khi ta g\u1ecdi c\u00e1c API s\u1ebd c\u00f3 format JSON, m\u1ed9t th\u01b0 vi\u1ec7n JSON s\u1ebd l\u00e0 v\u00f4 c\u00f9ng quan tr\u1ecdng \u1edf \u0111\u00e2y.\n\n\nHTTPotion - HTTP client\n\n\nElixir ch\u1ea1y tr\u00ean m\u00e1y \u1ea3o BEAM c\u1ee7a Erlang, n\u00ean th\u01b0 vi\u1ec7n HTTP client c\u1ee7a Erlang th\u00ec \u0111\u00e3 s\u1eb5n, ho\u00e0n thi\u1ec7n h\u00e0ng ch\u1ee5c n\u0103m r\u1ed3i. Ng\u01b0\u1eddi ta ch\u1ec9 c\u1ea7n th\u00eam b\u1edbt m\u1ed9t ch\u00fat sao cho tr\u00f4ng n\u00f3 \"Elixir\" h\u01a1n l\u00e0 \u0111\u01b0\u1ee3c.\n\n\nHTTPotion\n l\u00e0 th\u01b0 vi\u1ec7n \u0111\u01b0\u1ee3c l\u1ef1a ch\u1ecdn \u1edf \u0111\u00e2y, n\u00f3 c\u0169ng c\u00f3 v\u1ebb l\u00e0 th\u01b0 vi\u1ec7n ph\u1ed5 bi\u1ebfn nh\u1ea5t trong c\u00e1c HTTP client c\u1ee7a Elixir.  HTTPotion x\u00e2y d\u1ef1ng d\u1ef1a tr\u00ean th\u01b0 vi\u1ec7n \"hackney\" c\u1ee7a Erlang.\n\n\nVi\u1ec7c qu\u1ea3n l\u00fd c\u00e1c th\u01b0 vi\u1ec7n \u0111\u01b0\u1ee3c Mix x\u1eed l\u00fd r\u1ea5t \u0111\u01a1n gi\u1ea3n:\n- Th\u00eam t\u00ean c\u1ee7a th\u01b0 vi\u1ec7n v\u00e0o list trong function \ndeps\n\n- Ch\u1ea1y \nmix deps.get\n \u0111\u1ec3 t\u1ea3i th\u01b0 vi\u1ec7n v\u1ec1\n- B\u1eadt \niex -S mix\n \u0111\u1ec3 load th\u01b0 vi\u1ec7n v\u00e0o r\u1ed3i d\u00f9ng trong ch\u1ebf \u0111\u1ed9 interactive.\n\n\ndefp deps do\n  [\n    {:poison, \"~> 3.1\"},\n    {:httpoison, \"~> 0.12\"},\n    #...\n  ]\n\nend\n\n\n\n\nPoison - JSON library\n\n\nTa c\u00e0i \nth\u01b0 vi\u1ec7n Poison - th\u01b0 vi\u1ec7n x\u1eed l\u00fd JSON\n ph\u1ed5 bi\u1ebfn nh\u1ea5t c\u1ee7a Elixir.\n\n\nL\u1ea5y d\u1eef li\u1ec7u t\u1eeb GitHub API\n\n\nTh\u1eed d\u00f9ng b\u1ed9 \u0111\u00f4i th\u01b0 vi\u1ec7n n\u00e0y \u0111\u1ec3 l\u1ea5y danh s\u00e1ch c\u00e1c contributor c\u1ee7a \nSaltStack\n d\u00f9ng GitHub API:\n\n\niex(2)> {:ok, response} = HTTPoison.get \"https://api.github.com/repos/saltstack/salt/contributors?page=3\"\n{:ok,\n %HTTPoison.Response{body: \"[{\\\"login\\\":\\\"kjkuan\\\",\\\"id\\\":973329,\\\"avatar_url\\\":\\\"\n...\n\niex(5)> {:ok, contribs} = Poison.decode(Map.get(response, :body))\n{:ok,\n [%{\"avatar_url\" => \"https://avatars3.githubusercontent.com/u/973329?v=3\",\n    \"contributions\" => 88,\n    \"events_url\" => \"https://api.github.com/users/kjkuan/events{/privacy}\",\n...\n\niex(6)> contribs |> Enum.map(fn contrib -> Map.get(contrib, \"login\") end)\n[\"kjkuan\", \"thedrow\", \"alexbleotu\", \"bdrung\", \"robertkeizer\", \"hvnsweeting\",\n \"jhutchins\", \"giantlock\", \"aboe76\", \"multani\", \"herlo\", \"0xf10e\", \"ranl\",\n \"evinrude\", \"baijum\", \"cedwards\", \"lorengordon\", \"syphernl\", \"bbinet\", \"m03\",\n \"kaithar\", \"MTecknology\", \"rominf\", \"akissa\", \"claudiupopescu\", \"jodv\",\n \"inthecloud247\", \"castor-morveer\", \"fxdgear\", \"markusgattol\"]\n\n\n\n\n\u0110\u01a1n gi\u1ea3n, ng\u1eafn g\u1ecdn, s\u1ea1ch s\u1ebd \ud83c\udfc6",
             "title": "Http client"
