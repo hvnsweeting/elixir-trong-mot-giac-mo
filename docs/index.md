@@ -1,7 +1,7 @@
 # Học Elixir trong một giấc mơ
 [BETA]
 
-[`E lík xơ` - tác giải đọc tại đây.](https://youtu.be/Wa7_I_pc0yo?t=39s)
+[`E lík xơ` - tác giả José Valim đọc tại đây.](https://youtu.be/Wa7_I_pc0yo?t=39s)
 
 Lý do bạn thích học Haskell, LISP, Erlang, Elixir, Ocaml, Scala... những ngôn ngữ lập trình hàm (functional programming language) có vẻ hay ho, mà không bao giờ thành công là gì?
 
