@@ -1,6 +1,8 @@
 # Học Elixir trong một giấc mơ
 [BETA]
 
+[`E lík xơ` - tác giải đọc tại đây.](https://youtu.be/Wa7_I_pc0yo?t=39s)
+
 Lý do bạn thích học Haskell, LISP, Erlang, Elixir, Ocaml, Scala... những ngôn ngữ lập trình hàm (functional programming language) có vẻ hay ho, mà không bao giờ thành công là gì?
 
 Sau đây là vài lý do mình gặp phải:
@@ -1685,4 +1687,4 @@ Chương trình dòng lệnh (CLI tool) không phải là thế mạnh của Eli
 ### Tại sao tên lại nhảm nhí vậy "học Elixir trong một giấc mơ"?
 
 Vì việc đọc tiếng Anh ở Việt Nam rất "thảm hoạ".
-Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình viên lại đọc là "Pi-thông". Vậy nên tôi đặt tên có vần để người học có thể đọc đúng "Học `i lík sơ` trong một giấc mơ".
+Chữ "Python" - rõ ràng đọc là "pai-thon" thì phần lớn lập trình viên lại đọc là "Pi-thông". Vậy nên tôi đặt tên có vần để người học có thể đọc đúng "Học `E lík xơ` trong một giấc mơ".
