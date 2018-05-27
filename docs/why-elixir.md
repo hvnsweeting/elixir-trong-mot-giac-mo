@@ -6,3 +6,4 @@ When something is right for Erlang, that means the same for Elixir.
 - [Why a tech veteran code in Erlang](http://www.evanmiller.org/why-i-program-in-erlang.html)
 - [Elixir from Erlang author](https://joearms.github.io/published/2013-05-31-a-week-with-elixir.html)
 - [Erlang does distributed computing the right way - from ZeroMQ](http://zeromq.org/whitepapers:multithreading-magic)
+- [The Zen of Erlang](https://ferd.ca/the-zen-of-erlang.html)
