@@ -12,7 +12,7 @@ defmodule MyRouter do
   get "/json/:name" do
     conn
       |> put_resp_content_type("application/json")
-      |> send_resp(200, Poison.encode!(%{name: name}))
+      |> send_resp(200, Jason.encode!(%{name: name}))
   end
 
   forward "/jsonadd", to: JsonAddPlug

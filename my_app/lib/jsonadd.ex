@@ -4,7 +4,7 @@ defmodule JsonAddPlug do
 
   use Plug.Builder
 
-  plug Plug.Parsers, parsers: [:json], json_decoder: Poison
+  plug Plug.Parsers, parsers: [:json], json_decoder: Jason
 
   def init(options), do: options
 
@@ -13,7 +13,7 @@ defmodule JsonAddPlug do
     conn =  super(conn, [])
     IO.inspect conn.body_params
     %{"name" => name} = conn.body_params
-    send_resp(conn, 201, Poison.encode!(%{message: name}))
+    send_resp(conn, 201, Jason.encode!(%{message: name}))
 
   end
 end

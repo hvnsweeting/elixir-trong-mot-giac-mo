@@ -15,7 +15,7 @@ defmodule MyApp.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      applications: [:plug_cowboy, :poison],
+      applications: [:plug_cowboy, :jason],
       mod: {MyApp.Application, []}
     ]
   end
@@ -24,7 +24,7 @@ defmodule MyApp.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.0"},
-      {:poison, "~> 1.4.0"}
+      {:jason, "~> 1.1"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
