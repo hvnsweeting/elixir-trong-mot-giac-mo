@@ -15,7 +15,7 @@ defmodule MyRouter do
       |> send_resp(200, Poison.encode!(%{name: name}))
   end
 
-  #forward "/users", to: UsersRouter
+  forward "/jsonadd", to: JsonAddPlug
 
   match _ do
     send_resp(conn, 404, "oops")
