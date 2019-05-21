@@ -277,6 +277,8 @@ iex(54)> name
 http://elixir-lang.org/getting-started/basic-types.html#lists-or-tuples
 http://stackoverflow.com/questions/31192923/lists-vs-tuples-what-to-use-and-when
 
+Đọc thêm: trên IEx gõ `h Tuple`
+
 ### Map (dictionary)
 
 ```
@@ -288,6 +290,8 @@ Data type
 Reference modules
   Map
 ```
+
+Đọc thêm: trên IEx gõ `h Map`
 
 ### MapSet - kiểu dữ liệu tập hợp
 Chứa mỗi phần tử 1 lần, không có thứ tự [trừ 32 phần tử đầu](http://stackoverflow.com/a/40408469) (tức không thể sắp xếp, phải đổi thành kiểu list mới sắp xếp được.)
@@ -305,6 +309,8 @@ Reference modules
 Implemented protocols
   IEx.Info, Enumerable, Inspect, Collectable
 ```
+
+Đọc thêm: trên IEx gõ `h MapSet`
 
 ### Struct
 
@@ -1534,6 +1540,7 @@ iex(10)> IO.inspect(1..100|>Enum.map(fn x -> x*2 end), limit: :infinity)
 
 Module `File` chứa các function để tương tác với file, từ đọc, ghi, xoá, copy...
 
+Mở file với `File.open/2` dùng các mode `[:write, :read, :utf8, :append, :exclusive]`, rồi tương tác với file qua `IO.read` `IO.write`.
 
 ```
 iex(53)> IO.puts(:stderr, "Hello standard error")
@@ -1545,8 +1552,23 @@ iex(55)> IO.binwrite(file, "Hello world!")
 :ok
 iex(56)> File.close(file)
 :ok
-iex(57)> File.read("hellofile.txt")
+iex(57)> File.read("hellofile.txt")  # read whole file
 {:ok, "Hello world!"}
+
+# open in read mode then read line by line using IO.read/2
+iex(28)> {:ok, file} = File.open("/etc/passwd", [:read])
+{:ok, #PID<0.143.0>}
+iex(29)> IO.read(file, :line)
+"root:x:0:0:root:/root:/bin/bash\n"
+iex(30)> IO.read(file, :line)
+"daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\n"
+# all remaining files, as a string
+
+iex(48)> IO.read(file, :all)
+"bin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:...
+...
+iex(49)> IO.read(file, :line)
+:eof
 ```
 
 Các function xử lý file:
